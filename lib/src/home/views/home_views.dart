@@ -6,6 +6,7 @@ import 'package:tandu_run/src/home/controller/home_controller.dart';
 import 'package:tandu_run/utils/app_style.dart';
 import 'package:tandu_run/utils/size_config.dart';
 import 'package:tandu_run/utils/style_n_color.dart';
+import 'package:intl/intl.dart';
 
 final List<Map> teksStyleSignIn = [
   {
@@ -102,12 +103,13 @@ class HomeViews extends GetView<HomeController> {
                                 style: textStyle['Bold1'],
                               ),
                               Text(
-                                "${DateTime.now()}",
+                                "${DateFormat('EEEE, dd MMMM y').format(DateTime.now())}",
                                 style: TextStyle(
-                                    fontFamily: "font/Inter_Thin.ttf",
-                                    color: Colors.white54,
-                                    fontSize: (16),
-                                    fontWeight: FontWeight.w400),
+                                  fontFamily: "font/Inter_Thin.ttf",
+                                  color: Colors.white54,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               )
                             ],
                           ),
@@ -129,7 +131,7 @@ class HomeViews extends GetView<HomeController> {
                   ),
                 ),
                 Align(
-                    alignment: Alignment.center,
+                    alignment: Alignment.topCenter,
                     child: Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: paddingHorozontal1,
@@ -142,27 +144,26 @@ class HomeViews extends GetView<HomeController> {
                             crossAxisCount: 2,
                             children: <Widget>[
                               Align(
-                                alignment: Alignment.topLeft,
+                                alignment: Alignment.centerLeft,
                                 child: Text(
                                   "Cek kondisi tanaman mu saat ini. Apakah tanaman mu sudah mendapatkan nutrisi ? ",
+                                  textAlign: TextAlign.justify,
                                   style: TextStyle(
                                       fontFamily: "font/inter_regular.ttf",
                                       color: Colors.white,
-                                      fontSize: (12),
-                                      textBaseline: Jus,
+                                      fontSize: (14),
                                       fontWeight: FontWeight.w400),
                                 ),
                               ),
                               Align(
-                                alignment: Alignment.topRight,
+                                alignment: Alignment.centerRight,
                                 child: Container(
-                                  width: double.infinity,
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 5),
                                     child: Image(
                                         image: AssetImage(
-                                            'semuaAsset/gambar/awal.png')),
+                                            'semuaAsset/gambar/home.png')),
                                   ),
                                 ),
                               )
@@ -170,7 +171,7 @@ class HomeViews extends GetView<HomeController> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.only(left: 25, right: 25, bottom: 15),
                     child: Text(
                       "Pemantauan",
                       style: TextStyle(
@@ -178,6 +179,192 @@ class HomeViews extends GetView<HomeController> {
                           color: Colors.white,
                           fontSize: (22),
                           fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: paddingHorozontal1,
+                        vertical: paddingVertical1),
+                    child: Container(
+                      height: 70,
+                      width: SizeConfig.screenWidth,
+                      decoration: BoxDecoration(
+                          color: green,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Align(
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "Nilai TDS",
+                                          style: TextStyle(
+                                              fontFamily:
+                                                  "font/inter_regular.ttf",
+                                              color: Colors.white,
+                                              fontSize: (16),
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                      ),
+                                      Expanded(
+                                          child: Text(
+                                        "2000 ppm",
+                                        style: TextStyle(
+                                            fontFamily: "font/inter_bold.ttf",
+                                            color: Colors.white,
+                                            fontSize: (22),
+                                            fontWeight: FontWeight.w700),
+                                      ))
+                                    ],
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child:
+                                      Image.asset('semuaAsset/gambar/awal.png'),
+                                )
+                              ],
+                            )),
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: paddingHorozontal1,
+                        vertical: paddingVertical1),
+                    child: Container(
+                      height: 70,
+                      width: SizeConfig.screenWidth,
+                      decoration: BoxDecoration(
+                          color: green,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Align(
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "Volume Air",
+                                          style: TextStyle(
+                                              fontFamily:
+                                                  "font/inter_regular.ttf",
+                                              color: Colors.white,
+                                              fontSize: (16),
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                      ),
+                                      Expanded(
+                                          child: Text(
+                                        "1300 L",
+                                        style: TextStyle(
+                                            fontFamily: "font/inter_bold.ttf",
+                                            color: Colors.white,
+                                            fontSize: (22),
+                                            fontWeight: FontWeight.w700),
+                                      ))
+                                    ],
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child:
+                                      Image.asset('semuaAsset/gambar/awal.png'),
+                                )
+                              ],
+                            )),
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: paddingHorozontal1,
+                        vertical: paddingVertical1),
+                    child: Container(
+                      height: 70,
+                      width: SizeConfig.screenWidth,
+                      decoration: BoxDecoration(
+                          color: green,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Align(
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "pH",
+                                          style: TextStyle(
+                                              fontFamily:
+                                                  "font/inter_regular.ttf",
+                                              color: Colors.white,
+                                              fontSize: (16),
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                      ),
+                                      Expanded(
+                                          child: Text(
+                                        "5,5",
+                                        style: TextStyle(
+                                            fontFamily: "font/inter_bold.ttf",
+                                            color: Colors.white,
+                                            fontSize: (22),
+                                            fontWeight: FontWeight.w700),
+                                      ))
+                                    ],
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child:
+                                      Image.asset('semuaAsset/gambar/awal.png'),
+                                )
+                              ],
+                            )),
+                      ),
                     ),
                   ),
                 ),
