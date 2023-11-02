@@ -5,7 +5,49 @@ import 'package:tandu_run/routes/app_routes.dart';
 import 'package:tandu_run/utils/app_style.dart';
 import 'package:tandu_run/utils/size_config.dart';
 
-class kelolaPages extends GetView{
+final List<Map> teksStyleSignIn = [
+  {
+    'Bold1': const TextStyle(
+        fontFamily: "font/inter_bold.ttf",
+        color: Colors.white,
+        fontSize: (25),
+        fontWeight: FontWeight.w700),
+    'SemiBold1': const TextStyle(
+        fontFamily: "font/inter_semibold.ttf",
+        color: Colors.white,
+        fontWeight: FontWeight.w600,
+        fontSize: (18)),
+    'SemiBold2': const TextStyle(
+        fontFamily: "font/inter_extrabold.ttf",
+        color: Colors.white,
+        fontSize: (18),
+        fontWeight: FontWeight.w500),
+    'SemiBold3': const TextStyle(
+        fontFamily: "font/inter_extrabold.ttf",
+        color: Colors.white,
+        fontSize: (18),
+        fontWeight: FontWeight.w500),
+    'Thin1': const TextStyle(
+        fontFamily: "font/inter_regular.ttf",
+        color: Colors.white,
+        fontSize: (18),
+        fontWeight: FontWeight.w500),
+    'Thin2': const TextStyle(
+        fontFamily: "font/inter_regular.ttf",
+        color: Colors.white,
+        fontSize: (18),
+        fontWeight: FontWeight.w600),
+    'normal': const TextStyle(
+        fontFamily: "font/inter_regular.ttf",
+        color: Colors.white,
+        fontSize: (18),
+        fontWeight: FontWeight.w500)
+  }
+];
+
+// ------------------------------------------------------------------------------------------------------------------------------------------
+
+class kelolaPages extends GetView {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -42,14 +84,116 @@ class kelolaPages extends GetView{
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               children: [
-                
-                
-              
-              ]
-              ),
+                for (final textKelola in teksStyleSignIn)
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: paddingHorozontal1,
+                          vertical: paddingVertical3),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              "Kelola Hidroponik",
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                fontFamily: "font/inter_bold.ttf",
+                                color: Colors.white,
+                                fontSize: 26,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Image(
+                                image:
+                                    AssetImage('semuaAsset/gambar/kelola.png'),
+                                fit: BoxFit.cover, // Sesuaikan sesuai kebutuhan
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: paddingHorozontal1,
+                        vertical: paddingVertical1),
+                    child: Container(
+                      height: 70,
+                      width: SizeConfig.screenWidth,
+                      decoration: BoxDecoration(
+                          color: green,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Align(
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child:
+                                      Image.asset('semuaAsset/gambar/awal.png'),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            "Kondisi ppm saat ini",
+                                            textAlign: TextAlign.right,
+                                            style: TextStyle(
+                                                fontFamily:
+                                                    "font/inter_regular.ttf",
+                                                color: Colors.white,
+                                                fontSize: (16),
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            "2000 ppm",
+                                            style: TextStyle(
+                                                fontFamily:
+                                                    "font/inter_bold.ttf",
+                                                color: Colors.white,
+                                                fontSize: (22),
+                                                fontWeight: FontWeight.w700),
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )),
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
         ),
       ),
     );
   }
-
 }
