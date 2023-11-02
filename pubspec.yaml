@@ -11,6 +11,7 @@ dependencies:
     sdk: flutter
   
   get: ^4.6.5
+  flutter_svg: ^1.0.3
   
 
 dev_dependencies:
@@ -20,3 +21,29 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - semuaAsset/
+    - semuaAsset/gambar/awal.png
+    
+    
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: semuaAsset/font/inter_regular.ttf
+          weight: 400
+        - asset: semuaAsset/font/inter_medium.ttf
+          weight: 500
+        - asset: semuaAsset/font/inter_semibold.ttf
+          weight: 600
+        - asset: semuaAsset/font/inter_bold.ttf
+          weight: 700
+        - asset: semuaAsset/font/inter_extrabold.ttf
+          weight: 800
+        - asset: semuaAsset/font/inter_black.ttf
+          weight: 900
+        - asset: semuaAsset/font/Inter_Thin.ttf
+          weight: 400
+        - asset: semuaAsset/font/Inter_Light.ttf
+          weight: 300

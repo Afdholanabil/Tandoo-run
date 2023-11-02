@@ -10,11 +10,11 @@ import 'package:tandu_run/utils/style_n_color.dart';
 
 final List<Map> teksSignIn = [
   {
-    'Header': 'Masuk',
+    'Header': 'Selamat Datang di Tandoo-Run',
     'SubHeader':
         'Kami senang melihatmu kembali!\nMasuk dan mulalilah menyelamatkan lebih banyak orang.',
-    'Email': 'Username atau No Whatsapp',
-    'EmailHint': 'Username atau No Whatsapp kamu',
+    'Email': 'No Telepon',
+    'EmailHint': 'Nomor telepon whatsApp terverifikasi',
     'Password': 'Kata Sandi',
     'PasswordHint': 'Sandi minimal 8 karakter',
     'LupaPass': 'Lupa Kata Sandi?',
@@ -30,9 +30,9 @@ final List<Map> teksSignIn = [
 final List<Map> teksStyleSignIn = [
   {
     'Bold1': const TextStyle(
-        fontFamily: "font/inter_black.ttf",
-        color: Colors.black,
-        fontSize: (32),
+        fontFamily: "font/inter_bold.ttf",
+        color: Colors.white,
+        fontSize: (25),
         fontWeight: FontWeight.w700),
     'SemiBold1': const TextStyle(
         fontFamily: "font/inter_bold.ttf",
@@ -51,14 +51,19 @@ final List<Map> teksStyleSignIn = [
         fontWeight: FontWeight.w500),
     'Thin1': const TextStyle(
         fontFamily: "font/inter_regular.ttf",
-        color: Colors.black,
+        color: Colors.white,
         fontSize: (18),
         fontWeight: FontWeight.w500),
     'Thin2': const TextStyle(
         fontFamily: "font/inter_regular.ttf",
         color: Colors.white,
         fontSize: (18),
-        fontWeight: FontWeight.w600)
+        fontWeight: FontWeight.w600),
+    'normal': const TextStyle(
+        fontFamily: "font/inter_regular.ttf",
+        color: Colors.white,
+        fontSize: (18),
+        fontWeight: FontWeight.w500)
   }
 ];
 
@@ -69,7 +74,7 @@ class loginPages extends GetView<loginController> {
 
   @override
   Widget build(BuildContext context) {
-   SizeConfig().init(context);
+    SizeConfig().init(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -84,19 +89,40 @@ class loginPages extends GetView<loginController> {
                         children: [
                           Align(
                             alignment: FractionalOffset.topLeft,
-                            child: Text(teks['Header'],
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: teksStyle['Bold1']),
-                          ),
-                          Align(
-                            alignment: FractionalOffset.topLeft,
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Text(teks['SubHeader'],
+                              padding: EdgeInsets.only(top: 10),
+                              child: Text(teks['Header'],
                                   overflow: TextOverflow.ellipsis,
-                                  maxLines: 4,
-                                  style: teksStyle['SemiBold1']),
+                                  maxLines: 1,
+                                  style: teksStyle['Bold1']),
+                            ),
+                          ),
+                          // Align(
+                          //   alignment: FractionalOffset.topLeft,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(top: 8),
+                          //     child: Text(teks['SubHeader'],
+                          //         overflow: TextOverflow.ellipsis,
+                          //         maxLines: 4,
+                          //         style: teksStyle['SemiBold1']),
+                          //   ),
+                          // ),
+                          Align(
+                            alignment: FractionalOffset.topCenter,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: Container(
+                                width: double.infinity,
+                                height: 250,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'semuaAsset/gambar/awal.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
                             ),
                           ),
                           Align(
@@ -106,7 +132,7 @@ class loginPages extends GetView<loginController> {
                               child: Text(teks['Email'],
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  style: teksStyle['Thin1']),
+                                  style: teksStyle['normal']),
                             ),
                           ),
                           Align(
@@ -128,7 +154,10 @@ class loginPages extends GetView<loginController> {
                                   style: teksStyle['SemiBold1'],
                                   decoration: InputDecoration(
                                       hintText: teks['EmailHint'],
-                                      prefixIcon: const Icon(Icons.mail),
+                                      prefixIcon: const Icon(
+                                        Icons.local_phone_outlined,
+                                        color: green,
+                                      ),
                                       contentPadding: const EdgeInsets.fromLTRB(
                                           10, 13, 10, 7),
                                       border: InputBorder.none),
@@ -143,7 +172,7 @@ class loginPages extends GetView<loginController> {
                               child: Text(teks['Password'],
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  style: teksStyle['Thin1']),
+                                  style: teksStyle['normal']),
                             ),
                           ),
                           Align(
@@ -161,13 +190,16 @@ class loginPages extends GetView<loginController> {
                                         width: 1.2)),
                                 child: Obx(() => TextFormField(
                                       controller: controller.pass.value,
-                                      obscureText:                                              
+                                      obscureText:
                                           controller.passwordVisible.value,
                                       cursorColor: Colors.black,
                                       style: teksStyle['SemiBold1'],
                                       decoration: InputDecoration(
                                           hintText: teks['PasswordHint'],
-                                          prefixIcon: const Icon(Icons.lock),
+                                          prefixIcon: const Icon(
+                                            Icons.lock_outline,
+                                            color: green,
+                                          ),
                                           suffixIcon: IconButton(
                                             onPressed: () =>
                                                 controller.showHidePass(),
@@ -190,7 +222,7 @@ class loginPages extends GetView<loginController> {
                             ),
                           ),
                           Align(
-                            alignment: FractionalOffset.topRight,
+                            alignment: FractionalOffset.topLeft,
                             child: Padding(
                               padding: const EdgeInsets.only(top: 20),
                               child: GestureDetector(
@@ -205,15 +237,15 @@ class loginPages extends GetView<loginController> {
                           Align(
                             alignment: Alignment.center,
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 40),
+                              padding: const EdgeInsets.only(top: 100),
                               child: Material(
-                                color: Colors.red.shade400,
+                                color: green,
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 borderRadius: BorderRadius.circular(8),
                                 child: Obx(() => InkWell(
-                                      splashColor: Colors.red.shade700,
-                                      highlightColor: Colors.red.shade900,
-                                      onTap: () => null,
+                                      splashColor: green,
+                                      highlightColor: green,
+                                      onTap: () => controller.masukDashboard(),
                                       child: SizedBox(
                                         height: 50,
                                         child: controller.isLoading.value
@@ -233,7 +265,8 @@ class loginPages extends GetView<loginController> {
                                                       width: paddingVertical2),
                                                   Text(
                                                     'loading...',
-                                                    style: StyleTxt.b(16, white),
+                                                    style:
+                                                        StyleTxt.b(16, white),
                                                   ),
                                                 ],
                                               )
@@ -255,22 +288,6 @@ class loginPages extends GetView<loginController> {
                       ),
                     ),
                   ),
-              for (final teks in teksSignIn)
-                for (final teksStyle in teksStyleSignIn)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(teks['Footer'], style: teksStyle['SemiBold3']),
-                        GestureDetector(
-                          onTap: () => null,
-                          child: Text(teks['FooterButton'],
-                              style: teksStyle['SemiBold2']),
-                        )
-                      ],
-                    ),
-                  )
             ],
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:tandu_run/utils/app_style.dart';
 
 import 'routes/app_pages.dart';
 
@@ -11,6 +12,7 @@ void main() {
             title: 'Tandoo-Run',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
+              scaffoldBackgroundColor: bgColor,
               primarySwatch: Colors.blue,
               brightness: Brightness.light,
             ),

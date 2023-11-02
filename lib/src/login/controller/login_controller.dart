@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tandu_run/routes/app_routes.dart';
 import 'package:tandu_run/utils/app_style.dart';
 
-class loginController extends GetxController{
+class loginController extends GetxController {
   final account = TextEditingController().obs;
   final pass = TextEditingController().obs;
   var isLoading = false.obs;
@@ -51,4 +52,6 @@ class loginController extends GetxController{
   }
 
   showHidePass() => passwordVisible.value = !passwordVisible.value;
+  masukDashboard() => Get.toNamed(Routes.dashboard);
+  masukLupaPw() => Get.toNamed(Routes.lupaSandi);
 }
