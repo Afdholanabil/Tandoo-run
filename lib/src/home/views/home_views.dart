@@ -51,6 +51,7 @@ final List<Map> teksStyleSignIn = [
 // ------------------------------------------------------------------------------------------------------------------------------------------
 
 class HomeViews extends GetView<HomeController> {
+  const HomeViews({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -98,7 +99,7 @@ class HomeViews extends GetView<HomeController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Hii, Syelendra Rama',
+                                '${controller.a.toString()}Syilendra Kusuma',
                                 maxLines: 1,
                                 style: textStyle['Bold1'],
                               ),

@@ -226,7 +226,7 @@ class loginPages extends GetView<loginController> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 20),
                               child: GestureDetector(
-                                onTap: () => null,
+                                onTap: () => controller.masukLupaPw(),
                                 child: Text(teks['LupaPass'],
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,

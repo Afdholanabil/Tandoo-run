@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+
 import 'package:tandu_run/src/dashboard/controller/dashboard_controller.dart';
 import 'package:tandu_run/src/home/views/home_views.dart';
 import 'package:tandu_run/src/informasi/views/informasi_views.dart';
+
 import 'package:tandu_run/src/kelola/views/kelola_views.dart';
+
 import 'package:tandu_run/utils/app_style.dart';
 
 class DashboardPage extends GetView<DashboardController> {
@@ -48,9 +51,10 @@ class DashboardPage extends GetView<DashboardController> {
               controller: controller.pccontroller,
               onPageChanged: controller.onPageChange,
               children: [
+                informasiPages(),
                 HomeViews(),
                 kelolaPages(),
-                informasiPage(),
+                
               ],
             )),
             bottomNavigationBar: Obx((() => BottomNavigationBar(

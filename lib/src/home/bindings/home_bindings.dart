@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
+import 'package:tandu_run/src/home/controller/home_controller.dart';
 
-class HomeBindings extends Bindings{
+class HomeBindings extends Bindings {
   @override
   void dependencies() {
-    // TODO: implement dependencies
+    Get.lazyPut<HomeController>(() => HomeController());
   }
-
 }

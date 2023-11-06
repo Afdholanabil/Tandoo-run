@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:tandu_run/routes/app_routes.dart';
+import 'package:tandu_run/src/kelola/controller/kelola_controller.dart';
 import 'package:tandu_run/utils/app_style.dart';
 import 'package:tandu_run/utils/size_config.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:tandu_run/utils/style_n_color.dart';
 
 final List<Map> teksStyleSignIn = [
   {
@@ -47,7 +50,8 @@ final List<Map> teksStyleSignIn = [
 
 // ------------------------------------------------------------------------------------------------------------------------------------------
 
-class kelolaPages extends GetView {
+class kelolaPages extends GetView<kelolaController> {
+  const kelolaPages({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -139,7 +143,7 @@ class kelolaPages extends GetView {
                             padding: EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Align(
@@ -150,15 +154,12 @@ class kelolaPages extends GetView {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Align(
                                         alignment: Alignment.centerRight,
                                         child: Expanded(
-                                          flex: 2,
+                                          flex: 1,
                                           child: Text(
                                             "Kondisi ppm saat ini",
                                             textAlign: TextAlign.right,
@@ -166,21 +167,25 @@ class kelolaPages extends GetView {
                                                 fontFamily:
                                                     "font/inter_regular.ttf",
                                                 color: Colors.white,
-                                                fontSize: (16),
+                                                fontSize: (20),
                                                 fontWeight: FontWeight.w300),
                                           ),
                                         ),
                                       ),
-                                      Expanded(
-                                          flex: 2,
-                                          child: Text(
-                                            "2000 ppm",
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    "font/inter_bold.ttf",
-                                                color: Colors.white,
-                                                fontSize: (22),
-                                                fontWeight: FontWeight.w700),
+                                      Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Expanded(
+                                            flex: 2,
+                                            child: Text(
+                                              "2000 ppm",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                      "font/inter_bold.ttf",
+                                                  color: Colors.white,
+                                                  fontSize: (22),
+                                                  fontWeight: FontWeight.w700),
+                                            ),
                                           ))
                                     ],
                                   ),
@@ -191,6 +196,108 @@ class kelolaPages extends GetView {
                     ),
                   ),
                 ),
+                Align(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: green,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Align(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 40, horizontal: 20),
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  "Kelola nilai ppm",
+                                  style: TextStyle(
+                                      fontFamily: "font/inter_regular.ttf",
+                                      color: Colors.white,
+                                      fontSize: (22),
+                                      fontWeight: FontWeight.w800),
+                                ),
+                              ),
+                              Align(
+                                alignment: FractionalOffset.topLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8),
+                                  child: Container(
+                                    width: double.infinity,
+                                    margin: const EdgeInsets.all(2),
+                                    decoration: BoxDecoration(
+                                        color: Colors.green,
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.white70,
+                                                width: 2))),
+                                    child: TextFormField(
+                                      // controller: controller.account.value,
+                                      cursorColor: Colors.white,
+                                      style: TextStyle(
+                                          fontFamily: "font/inter_medium.ttf",
+                                          color: Colors.white,
+                                          fontSize: (16),
+                                          fontWeight: FontWeight.w500),
+                                      decoration: InputDecoration(
+                                          hintText: "Masukan kondisi nilai ppm",
+                                          hintStyle: TextStyle(
+                                              fontFamily:
+                                                  "font/inter_regular.ttf",
+                                              color: Colors.white60,
+                                              fontSize: (16),
+                                              fontWeight: FontWeight.w400),
+                                          contentPadding:
+                                              const EdgeInsets.fromLTRB(
+                                                  10, 13, 10, 7),
+                                          border: InputBorder.none,
+                                          focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.white))),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 40),
+                                  child: Material(
+                                      color: white,
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: InkWell(
+                                        splashColor: white,
+                                        highlightColor: white,
+                                        onTap: () => null,
+                                        child: SizedBox(
+                                            height: 50,
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                controller.kirim.toString(),
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                        "font/inter_bold.ttf",
+                                                    color: green,
+                                                    fontSize: (16),
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              ),
+                                            )),
+                                      )),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
               ]),
         ),
       ),
