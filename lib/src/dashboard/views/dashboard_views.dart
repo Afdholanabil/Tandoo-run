@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import 'package:tandu_run/src/dashboard/controller/dashboard_controller.dart';
 import 'package:tandu_run/src/home/views/home_views.dart';
 import 'package:tandu_run/src/informasi/views/informasi_views.dart';
-
 import 'package:tandu_run/src/kelola/views/kelola_views.dart';
 
+import 'package:tandu_run/src/lupa_sandi/views/lupaSandi_views.dart';
+
 import 'package:tandu_run/utils/app_style.dart';
+import 'package:tandu_run/routes/app_pages.dart';
 
 class DashboardPage extends GetView<DashboardController> {
   @override
@@ -30,14 +32,15 @@ class DashboardPage extends GetView<DashboardController> {
                     child: const Text('Tidak'),
                   ),
                 ),
-                Padding(padding: EdgeInsets.symmetric(
-                  horizontal: paddingHorozontal1,
-                  vertical: paddingVertical1
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: paddingHorozontal1,
+                      vertical: paddingVertical1),
+                  child: GestureDetector(
+                    onTap: () => null,
+                    child: const Text("Ya"),
+                  ),
                 ),
-                child: GestureDetector(
-                  onTap: () => null,
-                  child: const Text("Ya"),
-                ),),
                 const SizedBox(
                   width: 10,
                 ),
@@ -51,17 +54,17 @@ class DashboardPage extends GetView<DashboardController> {
               controller: controller.pccontroller,
               onPageChanged: controller.onPageChange,
               children: [
-                informasiPages(),
                 HomeViews(),
                 kelolaPages(),
+                informasiPages()
+                ],
                 
-              ],
             )),
             bottomNavigationBar: Obx((() => BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
                   selectedItemColor: green,
                   unselectedItemColor: Colors.black.withOpacity(.30),
-                  items: const[
+                  items: const [
                     BottomNavigationBarItem(
                       icon: Icon(
                         Icons.home_filled,

@@ -61,7 +61,7 @@ class kelolaPages extends GetView<kelolaController> {
           AlertDialog(
             title: const Text("Notice"),
             content: const Text(
-                "apakah anda sudah yakin untuk keluar dari aplikasi"),
+                "Apakah anda sudah yakin untuk keluar dari aplikasi"),
             actions: [
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -104,7 +104,7 @@ class kelolaPages extends GetView<kelolaController> {
                               textAlign: TextAlign.justify,
                               style: TextStyle(
                                 fontFamily: "font/inter_bold.ttf",
-                                color: Colors.white,
+                                color: hitam2,
                                 fontSize: 26,
                                 fontWeight: FontWeight.w700,
                               ),

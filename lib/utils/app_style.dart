@@ -10,6 +10,8 @@ final paddingHorozontal3_5 = SizeConfig.blockSizeHorizontal! * 8;
 final paddingHorozontal4 = SizeConfig.blockSizeHorizontal! * 10;
 final paddingHorozontal5 = SizeConfig.blockSizeHorizontal! * 12;
 final paddingHorozontal6 = SizeConfig.blockSizeHorizontal! * 24;
+final paddingHorozontal7 = SizeConfig.blockSizeHorizontal! * 28;
+final paddingHorozontal8 = SizeConfig.blockSizeHorizontal! * 36;
 final paddingVertical1 = SizeConfig.blockSizeVertical! * 2;
 final paddingVertical2 = SizeConfig.blockSizeVertical! * 4;
 final paddingVertical3 = SizeConfig.blockSizeVertical! * 6;
@@ -38,7 +40,11 @@ const green = Color.fromARGB(255,69, 170, 67);
 const putih = Color.fromARGB(255, 249, 250, 251);
 const abu1 = Color.fromARGB(255, 218, 215, 205);
 const abu2 = Color.fromARGB(255, 107, 114, 128);
+const abu3 = Color.fromARGB(255,218, 218, 218);
+
 const biru = Color.fromARGB(255, 28, 100, 242);
+const hitam1 = Color.fromARGB(255,31, 42, 55);
+const hitam2 = Color.fromARGB(255,55, 65, 81);
 
 
 

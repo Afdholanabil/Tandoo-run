@@ -14,9 +14,9 @@ class lupaSandiPages extends GetView<lupaSandiController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: Colors.white, //change your color here
+          color: hitam2, //change your color here
         ),
-        backgroundColor: bgColor,
+        backgroundColor: white,
         elevation: 0,
         centerTitle: false,
         title: const Text(
@@ -25,7 +25,7 @@ class lupaSandiPages extends GetView<lupaSandiController> {
             fontSize: 26,
             fontFamily: "font/inter_extrabold.ttf",
             fontWeight: FontWeight.w700,
-            color: Colors.white,
+            color: hitam2,
           ),
         ),
       ),
@@ -35,7 +35,7 @@ class lupaSandiPages extends GetView<lupaSandiController> {
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Text(
                 "${controller.lupaw.toString()}",
                 textAlign: TextAlign.justify,
@@ -43,7 +43,7 @@ class lupaSandiPages extends GetView<lupaSandiController> {
                   fontSize: 18,
                   fontFamily: 'font/inter_regular.ttf',
                   fontWeight: FontWeight.w300,
-                  color: Colors.white,
+                  color: hitam2,
                 ),
               ),
             ),
@@ -51,13 +51,13 @@ class lupaSandiPages extends GetView<lupaSandiController> {
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 "No Telepon",
                 style: TextStyle(
                   fontFamily: 'font/inter_regular.ttf',
                   fontSize: 19,
-                  color: Colors.white,
+                  color: hitam1,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -66,7 +66,7 @@ class lupaSandiPages extends GetView<lupaSandiController> {
           Align(
             alignment: FractionalOffset.topLeft,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Container(
                 width: double.infinity,
                 margin: const EdgeInsets.all(2),

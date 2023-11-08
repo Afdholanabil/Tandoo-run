@@ -61,7 +61,7 @@ class HomeViews extends GetView<HomeController> {
           AlertDialog(
             title: const Text("Notice"),
             content: const Text(
-                "apakah anda sudah yakin untuk keluar dari aplikasi"),
+                "Apakah anda sudah yakin untuk keluar dari aplikasi"),
             actions: [
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -91,7 +91,7 @@ class HomeViews extends GetView<HomeController> {
                 for (final textStyle in teksStyleSignIn)
                   Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -101,13 +101,17 @@ class HomeViews extends GetView<HomeController> {
                               Text(
                                 '${controller.a.toString()}Syilendra Kusuma',
                                 maxLines: 1,
-                                style: textStyle['Bold1'],
+                                style: TextStyle(
+                                    fontFamily: "font/inter_bold.ttf",
+                                    color: hitam1,
+                                    fontSize: (25),
+                                    fontWeight: FontWeight.w700),
                               ),
                               Text(
                                 "${DateFormat('EEEE, dd MMMM y').format(DateTime.now())}",
                                 style: TextStyle(
                                   fontFamily: "font/Inter_Thin.ttf",
-                                  color: Colors.white54,
+                                  color: hitam2,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -125,7 +129,7 @@ class HomeViews extends GetView<HomeController> {
                       width: SizeConfig.screenWidth,
                       height: 2,
                       decoration: BoxDecoration(
-                        color: Colors.white30,
+                        color: abu1,
                         shape: BoxShape.rectangle,
                       ),
                     ),
@@ -151,7 +155,7 @@ class HomeViews extends GetView<HomeController> {
                                   textAlign: TextAlign.justify,
                                   style: TextStyle(
                                       fontFamily: "font/inter_regular.ttf",
-                                      color: Colors.white,
+                                      color: hitam1,
                                       fontSize: (14),
                                       fontWeight: FontWeight.w400),
                                 ),
@@ -177,7 +181,7 @@ class HomeViews extends GetView<HomeController> {
                       "Pemantauan",
                       style: TextStyle(
                           fontFamily: "font/inter_bold.ttf",
-                          color: Colors.white,
+                          color: hitam2,
                           fontSize: (22),
                           fontWeight: FontWeight.w700),
                     ),
@@ -200,7 +204,7 @@ class HomeViews extends GetView<HomeController> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Align(
@@ -236,8 +240,8 @@ class HomeViews extends GetView<HomeController> {
                                 ),
                                 Align(
                                   alignment: Alignment.centerLeft,
-                                  child:
-                                      Image.asset('semuaAsset/gambar/awal.png'),
+                                  child: Image.asset(
+                                      'semuaAsset/gambar/home_molekul.png'),
                                 )
                               ],
                             )),
@@ -298,8 +302,8 @@ class HomeViews extends GetView<HomeController> {
                                 ),
                                 Align(
                                   alignment: Alignment.centerLeft,
-                                  child:
-                                      Image.asset('semuaAsset/gambar/awal.png'),
+                                  child: Image.asset(
+                                      'semuaAsset/gambar/home_volume.png'),
                                 )
                               ],
                             )),
@@ -360,8 +364,8 @@ class HomeViews extends GetView<HomeController> {
                                 ),
                                 Align(
                                   alignment: Alignment.centerLeft,
-                                  child:
-                                      Image.asset('semuaAsset/gambar/awal.png'),
+                                  child: Image.asset(
+                                      'semuaAsset/gambar/home_ph.png'),
                                 )
                               ],
                             )),

@@ -31,12 +31,12 @@ final List<Map> teksStyleSignIn = [
   {
     'Bold1': const TextStyle(
         fontFamily: "font/inter_bold.ttf",
-        color: Colors.white,
+        color: hitam2,
         fontSize: (25),
         fontWeight: FontWeight.w700),
     'SemiBold1': const TextStyle(
         fontFamily: "font/inter_bold.ttf",
-        color: Colors.black45,
+        color: hitam2,
         height: 1.4,
         fontSize: (18)),
     'SemiBold2': const TextStyle(
@@ -61,7 +61,7 @@ final List<Map> teksStyleSignIn = [
         fontWeight: FontWeight.w600),
     'normal': const TextStyle(
         fontFamily: "font/inter_regular.ttf",
-        color: Colors.white,
+        color: hitam2,
         fontSize: (18),
         fontWeight: FontWeight.w500)
   }
@@ -90,11 +90,15 @@ class loginPages extends GetView<loginController> {
                           Align(
                             alignment: FractionalOffset.topLeft,
                             child: Padding(
-                              padding: EdgeInsets.only(top: 10),
+                              padding: EdgeInsets.only(top: 10, left: 10),
                               child: Text(teks['Header'],
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  style: teksStyle['Bold1']),
+                                  style: TextStyle(
+                                      fontFamily: "font/inter_bold.ttf",
+                                      color: hitam2,
+                                      fontSize: (25),
+                                      fontWeight: FontWeight.w700)),
                             ),
                           ),
                           // Align(
@@ -132,7 +136,11 @@ class loginPages extends GetView<loginController> {
                               child: Text(teks['Email'],
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  style: teksStyle['normal']),
+                                  style: TextStyle(
+                                      fontFamily: "font/inter_medium.ttf",
+                                      color: hitam2,
+                                      fontSize: (18),
+                                      fontWeight: FontWeight.w500)),
                             ),
                           ),
                           Align(
@@ -172,7 +180,11 @@ class loginPages extends GetView<loginController> {
                               child: Text(teks['Password'],
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  style: teksStyle['normal']),
+                                  style: TextStyle(
+                                      fontFamily: "font/inter_medium.ttf",
+                                      color: hitam2,
+                                      fontSize: (18),
+                                      fontWeight: FontWeight.w500)),
                             ),
                           ),
                           Align(
@@ -204,11 +216,13 @@ class loginPages extends GetView<loginController> {
                                             onPressed: () =>
                                                 controller.showHidePass(),
                                             splashColor: Colors.transparent,
-                                            icon: Icon(!controller
-                                                    .passwordVisible.value
-                                                ? Icons.visibility_outlined
-                                                : Icons
-                                                    .visibility_off_outlined),
+                                            icon: Icon(
+                                              !controller.passwordVisible.value
+                                                  ? Icons.visibility_outlined
+                                                  : Icons
+                                                      .visibility_off_outlined,
+                                              color: green,
+                                            ),
                                             color: const Color.fromARGB(
                                                 255, 143, 143, 143),
                                           ),

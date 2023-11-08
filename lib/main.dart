@@ -13,11 +13,10 @@ void main() {
             title: 'Tandoo-Run',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              scaffoldBackgroundColor: bgColor,
               primarySwatch: Colors.blue,
               brightness: Brightness.light,
             ),
-            initialRoute:AppPages.initial,
-              getPages: AppPages.routes,
+            initialRoute: AppPages.initial,
+            getPages: AppPages.routes,
           )));
 }

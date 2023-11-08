@@ -9,7 +9,7 @@ class ubahSandiController extends GetxController {
   var passwordVisible1 = true.obs;
   var passwordVisible2 = true.obs;
 
-  berhasilKonfirmasi() => Get.offAllNamed(Routes.berhasilUbahPw);
+  berhasilKonfirmasi() => Get.toNamed(Routes.berhasilUbahPw);
   showHidePass() => passwordVisible1.value = !passwordVisible1.value;
   showHidePass2() => passwordVisible2.value = !passwordVisible2.value;
 }

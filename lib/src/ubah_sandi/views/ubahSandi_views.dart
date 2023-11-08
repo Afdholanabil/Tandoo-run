@@ -13,9 +13,9 @@ class ubahSandiPages extends GetView<ubahSandiController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: Colors.white, //change your color here
+          color: hitam2, //change your color here
         ),
-        backgroundColor: bgColor,
+        backgroundColor: white,
         elevation: 0,
         centerTitle: false,
         title: const Text(
@@ -24,7 +24,7 @@ class ubahSandiPages extends GetView<ubahSandiController> {
             fontSize: 26,
             fontFamily: "font/inter_extrabold.ttf",
             fontWeight: FontWeight.w700,
-            color: Colors.white,
+            color: hitam2,
           ),
         ),
       ),
@@ -42,7 +42,7 @@ class ubahSandiPages extends GetView<ubahSandiController> {
                     fontFamily: 'semuaAsset/font/inter_regular.ttf',
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
-                    color: Colors.white),
+                    color: hitam1),
               ),
             ),
           ),
@@ -60,7 +60,7 @@ class ubahSandiPages extends GetView<ubahSandiController> {
                     fontFamily: 'semuaAsset/font/inter_semibold.ttf',
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white),
+                    color: hitam1),
               ),
             ),
           ),
@@ -76,29 +76,42 @@ class ubahSandiPages extends GetView<ubahSandiController> {
                     borderRadius: BorderRadius.circular(8),
                     border:
                         Border.all(color: Colors.grey.shade300, width: 1.2)),
-                child: TextFormField(
-                  controller: controller.sandiBaru.value,
-                  cursorColor: Colors.black,
-                  style: TextStyle(
-                    fontFamily: 'semuaAsset/font/inter_medium.ttf',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                  decoration: InputDecoration(
-                      hintText: "Masukan kata sandi baru",
-                      hintStyle: TextStyle(
+                child: Obx(() => TextFormField(
+                      controller: controller.sandiBaru.value,
+                      obscureText: controller.passwordVisible1.value,
+                      cursorColor: Colors.black,
+                      style: TextStyle(
                           fontFamily: 'semuaAsset/font/inter_semibold.ttf',
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black45),
-                      prefixIcon: const Icon(
-                        Icons.lock_outline,
-                        color: green,
-                      ),
-                      contentPadding: const EdgeInsets.fromLTRB(10, 13, 10, 7),
-                      border: InputBorder.none),
-                ),
+                          color: hitam2),
+                      decoration: InputDecoration(
+                          hintText: "Masukan kata sandi baru",
+                          hintStyle: TextStyle(
+                              fontFamily: 'semuaAsset/font/inter_semibold.ttf',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black45),
+                          prefixIcon: const Icon(
+                            Icons.lock_outline,
+                            color: green,
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () => controller.showHidePass(),
+                            splashColor: Colors.transparent,
+                            icon: Icon(
+                              !controller.passwordVisible1.value
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              color: green,
+                            ),
+                            color: const Color.fromARGB(255, 143, 143, 143),
+                          ),
+                          suffixIconColor: Colors.black,
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(10, 13, 10, 7),
+                          border: InputBorder.none),
+                    )),
               ),
             ),
           ),
@@ -116,7 +129,7 @@ class ubahSandiPages extends GetView<ubahSandiController> {
                     fontFamily: 'semuaAsset/font/inter_semibold.ttf',
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white),
+                    color: hitam2),
               ),
             ),
           ),
@@ -132,29 +145,42 @@ class ubahSandiPages extends GetView<ubahSandiController> {
                     borderRadius: BorderRadius.circular(8),
                     border:
                         Border.all(color: Colors.grey.shade300, width: 1.2)),
-                child: TextFormField(
-                  controller: controller.sandiBaru.value,
-                  cursorColor: Colors.black,
-                  style: TextStyle(
-                    fontFamily: 'semuaAsset/font/inter_medium.ttf',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                  decoration: InputDecoration(
-                      hintText: "Ulangi kata sandi anda",
-                      hintStyle: TextStyle(
+                child: Obx(() => TextFormField(
+                      controller: controller.sandiKonfirmasi.value,
+                      obscureText: controller.passwordVisible2.value,
+                      cursorColor: Colors.black,
+                      style: TextStyle(
                           fontFamily: 'semuaAsset/font/inter_semibold.ttf',
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black45),
-                      prefixIcon: const Icon(
-                        Icons.lock_outline,
-                        color: green,
-                      ),
-                      contentPadding: const EdgeInsets.fromLTRB(10, 13, 10, 7),
-                      border: InputBorder.none),
-                ),
+                          color: hitam2),
+                      decoration: InputDecoration(
+                          hintText: "Ulangi kata sandi baru",
+                          hintStyle: TextStyle(
+                              fontFamily: 'semuaAsset/font/inter_semibold.ttf',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black45),
+                          prefixIcon: const Icon(
+                            Icons.lock_outline,
+                            color: green,
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () => controller.showHidePass2(),
+                            splashColor: Colors.transparent,
+                            icon: Icon(
+                              !controller.passwordVisible2.value
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              color: green,
+                            ),
+                            color: const Color.fromARGB(255, 143, 143, 143),
+                          ),
+                          suffixIconColor: Colors.black,
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(10, 13, 10, 7),
+                          border: InputBorder.none),
+                    )),
               ),
             ),
           ),
