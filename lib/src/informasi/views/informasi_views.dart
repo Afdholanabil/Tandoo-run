@@ -86,7 +86,7 @@ class informasiPages extends GetView<informasiController> {
                               child: InkWell(
                                 splashColor: abu1,
                                 highlightColor: abu2,
-                                onTap: () => null,
+                                onTap: () => controller.masukInformasiPenetesan(),
                                 child: SizedBox(
                                   height: 50,
                                   child: Row(
@@ -130,7 +130,7 @@ class informasiPages extends GetView<informasiController> {
                               child: InkWell(
                                 splashColor: abu1,
                                 highlightColor: abu2,
-                                onTap: () => null,
+                                onTap: () => controller.masukInformasiHama(),
                                 child: SizedBox(
                                   height: 50,
                                   child: Row(

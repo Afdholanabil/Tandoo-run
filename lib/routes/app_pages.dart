@@ -5,6 +5,10 @@ import 'package:tandu_run/src/berhasil_ubahSandi/views/berhasil_ubahPw_views.dar
 
 import 'package:tandu_run/src/dashboard/bindings/dashboard_binding.dart';
 import 'package:tandu_run/src/dashboard/views/dashboard_views.dart';
+import 'package:tandu_run/src/informasi_hama/bindings/informasiHama_binding.dart';
+import 'package:tandu_run/src/informasi_hama/views/informasiHama_pages.dart';
+import 'package:tandu_run/src/informasi_penetesan/binding/informasiPenetesan_binding.dart';
+import 'package:tandu_run/src/informasi_penetesan/views/informasiPenetesan_pages.dart';
 
 import 'package:tandu_run/src/login/bindings/login_bindings.dart';
 import 'package:tandu_run/src/login/views/loginPage.dart';
@@ -39,6 +43,17 @@ class AppPages {
         name: Routes.berhasilUbahPw, 
         page: ()=> berhasilUbahPwPages(),
         binding: berhasilUbahPwBindings()),
+    
+    GetPage(
+        name: Routes.informasiHama, 
+        page: ()=> InformasiHamaPages(),
+        binding: informasiHamaBinding()),
+    
+    GetPage(
+        name: Routes.informasiPenetesan, 
+        page: ()=>informasiPenetesanPages(),
+        binding: informasiPenetesanBinding())
+    
     
   ];
 }

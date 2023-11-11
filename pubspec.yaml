@@ -16,6 +16,8 @@ dependencies:
   date_picker_timeline: ^1.2.5
   animated_text_kit: ^4.2.2
   sliding_up_panel: ^2.0.0+1
+  horizontal_week_calendar: ^0.0.11
+  http: ^0.13.5
   
   
 

@@ -12,4 +12,5 @@ abstract class Routes {
   static const informasiPenetesan = '/informasiPenetesan';
   static const informasiHama = '/informasiHama';
   static const berhasilUbahPw = '/berhasil_ubahSandi';
+
 }
