@@ -8,16 +8,16 @@ AkunModel akunModelFromJson(String str) => AkunModel.fromJson(json.decode(str));
 
 
 class AkunModel {
-    int id;
-    String nama;
-    String noTelfon;
-    String password;
+    int? id;
+    String? nama;
+    String? noTelfon;
+    String? password;
 
     AkunModel({
-        required this.id,
-        required this.nama,
-        required this.noTelfon,
-        required this.password,
+         this.id,
+         this.nama,
+         this.noTelfon,
+         this.password,
     });
 
     factory AkunModel.fromJson(Map<String, dynamic> json) => AkunModel(

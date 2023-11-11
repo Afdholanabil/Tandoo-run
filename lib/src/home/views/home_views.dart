@@ -98,15 +98,15 @@ class HomeViews extends GetView<HomeController> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                '${controller.a.toString()}Syilendra Kusuma',
-                                maxLines: 1,
-                                style: TextStyle(
-                                    fontFamily: "font/inter_bold.ttf",
-                                    color: hitam1,
-                                    fontSize: (25),
-                                    fontWeight: FontWeight.w700),
-                              ),
+                              Obx(() => Text(
+                                    '${controller.a.toString()}, ${controller.modelAkun.value.nama.toString()}',
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        fontFamily: "font/inter_bold.ttf",
+                                        color: hitam1,
+                                        fontSize: (25),
+                                        fontWeight: FontWeight.w700),
+                                  )),
                               Text(
                                 "${DateFormat('EEEE, dd MMMM y').format(DateTime.now())}",
                                 style: TextStyle(
