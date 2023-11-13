@@ -259,7 +259,7 @@ class loginPages extends GetView<loginController> {
                                 child: Obx(() => InkWell(
                                       splashColor: green,
                                       highlightColor: green,
-                                      onTap: () => controller.masukDashboard(),
+                                      onTap: () => controller.loginPost(),
                                       child: SizedBox(
                                         height: 50,
                                         child: controller.isLoading.value
