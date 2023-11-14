@@ -71,9 +71,13 @@ class HomeViews extends GetView<HomeController> {
                   child: const Text('Tidak'),
                 ),
               ),
-              GestureDetector(
-                onTap: () => Get.offAllNamed(Routes.informasi),
-                child: const Text('Ya'),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: paddingHorozontal1, vertical: paddingVertical2),
+                child: GestureDetector(
+                  onTap: () => Get.back(),
+                  child: const Text('Tidak'),
+                ),
               ),
               const SizedBox(
                 width: 10,
@@ -99,7 +103,7 @@ class HomeViews extends GetView<HomeController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Obx(() => Text(
-                                    '${controller.a.toString()}, ${controller.modelAkun.value.nama.toString()}',
+                                    '${controller.a.toString()}, ${controller.namaAkun.value}',
                                     maxLines: 1,
                                     style: TextStyle(
                                         fontFamily: "font/inter_bold.ttf",
@@ -227,14 +231,14 @@ class HomeViews extends GetView<HomeController> {
                                         ),
                                       ),
                                       Expanded(
-                                          child: Text(
-                                        "2000 ppm",
+                                          child: Obx(() =>  Text(
+                                        "${controller.modelNutrisi.value.ppm.toString()} ppm",
                                         style: TextStyle(
                                             fontFamily: "font/inter_bold.ttf",
                                             color: Colors.white,
                                             fontSize: (22),
                                             fontWeight: FontWeight.w700),
-                                      ))
+                                      )))
                                     ],
                                   ),
                                 ),
@@ -289,14 +293,14 @@ class HomeViews extends GetView<HomeController> {
                                         ),
                                       ),
                                       Expanded(
-                                          child: Text(
-                                        "1300 L",
+                                          child:Obx(() =>  Text(
+                                        "${controller.modelNutrisi.value.volumeAir.toString()} L",
                                         style: TextStyle(
                                             fontFamily: "font/inter_bold.ttf",
                                             color: Colors.white,
                                             fontSize: (22),
                                             fontWeight: FontWeight.w700),
-                                      ))
+                                      )))
                                     ],
                                   ),
                                 ),
@@ -351,14 +355,14 @@ class HomeViews extends GetView<HomeController> {
                                         ),
                                       ),
                                       Expanded(
-                                          child: Text(
-                                        "5,5",
+                                          child:Obx(() =>  Text(
+                                        "${controller.modelNutrisi.value.ph.toString()}",
                                         style: TextStyle(
                                             fontFamily: "font/inter_bold.ttf",
                                             color: Colors.white,
                                             fontSize: (22),
                                             fontWeight: FontWeight.w700),
-                                      ))
+                                      )))
                                     ],
                                   ),
                                 ),

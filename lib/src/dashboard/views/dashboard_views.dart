@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:tandu_run/routes/app_routes.dart';
 
 import 'package:tandu_run/src/dashboard/controller/dashboard_controller.dart';
 import 'package:tandu_run/src/home/views/home_views.dart';
@@ -37,7 +38,7 @@ class DashboardPage extends GetView<DashboardController> {
                       horizontal: paddingHorozontal1,
                       vertical: paddingVertical1),
                   child: GestureDetector(
-                    onTap: () => null,
+                    onTap: () => Get.offAllNamed(Routes.login),
                     child: const Text("Ya"),
                   ),
                 ),

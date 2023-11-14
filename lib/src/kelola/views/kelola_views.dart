@@ -176,8 +176,8 @@ class kelolaPages extends GetView<kelolaController> {
                                           alignment: Alignment.bottomRight,
                                           child: Expanded(
                                             flex: 2,
-                                            child: Text(
-                                              "2000 ppm",
+                                            child: Obx(() =>  Text(
+                                              "${controller.modelNutrisi.value.ppm.toString()} ppm",
                                               textAlign: TextAlign.right,
                                               style: TextStyle(
                                                   fontFamily:
@@ -185,7 +185,7 @@ class kelolaPages extends GetView<kelolaController> {
                                                   color: Colors.white,
                                                   fontSize: (22),
                                                   fontWeight: FontWeight.w700),
-                                            ),
+                                            )),
                                           ))
                                     ],
                                   ),

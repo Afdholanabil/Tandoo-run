@@ -56,11 +56,14 @@ class loginController extends GetxController {
 
   loginPost() async {
     if (checkInput()) {
-      isLoading.value = true;
-      var result = await APIClient().postData("post_login", {
-        "no_telpfon": account.value.text,
-        "password": pass.value.text
-      }).catchError((err) {});
+      // isLoading.value = true;
+      var result = await APIClient().postData('post_login', {
+        "no_telfon" : account.value.text,
+        "password" : pass.value.text
+      }).catchError((err) {
+        print("Error during login request: $err");
+      });
+
       if (result != null && result != false) {
         var dataLogin = loginModelFromJson(result);
         if (dataLogin.status) {

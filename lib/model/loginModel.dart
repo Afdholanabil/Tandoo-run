@@ -20,10 +20,7 @@ class LoginModel {
     });
 
     factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-        data: json["data"] != null ?
-        Data.fromJson(json["data"])
-        : Data(id: 0, nama: "", noTelfon: ""),
-
+        data: Data.fromJson(json["data"]),
         message: json["message"],
         status: json["status"],
     );
@@ -43,9 +40,9 @@ class Data {
     });
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
-        id: json["id"] ?? 0,
-        nama: json["nama"] ?? "",
-        noTelfon: json["no_telfon"] ?? "",
+        id: json["id"],
+        nama: json["nama"],
+        noTelfon: json["no_telfon"],
     );
 
 
