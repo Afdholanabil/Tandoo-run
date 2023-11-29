@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "695436045305",
+    "project_id": "tandoo-run",
+    "storage_bucket": "tandoo-run.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695436045305:android:7de6b89be8639c33f4ab28",
+        "android_client_info": {
+          "package_name": "com.example.tandu_run"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB21kzWOoXEdbxlXjhOX5vQ0okc6TAPbC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

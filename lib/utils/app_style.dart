@@ -34,19 +34,17 @@ const extrabold =
 const blackft =
     TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w900, fontSize: 20);
 
-
 const bgColor = Color.fromARGB(255, 19, 15, 38);
-const green = Color.fromARGB(255,69, 170, 67);
+const green = Color.fromARGB(255, 69, 170, 67);
 const putih = Color.fromARGB(255, 249, 250, 251);
 const abu1 = Color.fromARGB(255, 218, 215, 205);
 const abu2 = Color.fromARGB(255, 107, 114, 128);
-const abu3 = Color.fromARGB(255,218, 218, 218);
+const abu3 = Color.fromARGB(255, 218, 218, 218);
+const oren = Color.fromARGB(255, 228, 174, 69);
 
 const biru = Color.fromARGB(255, 28, 100, 242);
-const hitam1 = Color.fromARGB(255,31, 42, 55);
-const hitam2 = Color.fromARGB(255,55, 65, 81);
-
-
+const hitam1 = Color.fromARGB(255, 31, 42, 55);
+const hitam2 = Color.fromARGB(255, 55, 65, 81);
 
 const red1 = Color(0xffe02424);
 const redallert = Color(0xffFF0000);
