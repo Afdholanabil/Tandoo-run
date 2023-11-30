@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
@@ -191,6 +192,12 @@ class informasiHamaController extends GetxController {
         // Set kategori berdasarkan hasil deteksi gambar
         if (terdeteksiBelalang) {
           setPredictedCategory("Terdeteksi Belalang");
+          AwesomeNotifications().createNotification(
+              content: NotificationContent(
+                  id: 1,
+                  channelKey: 'channelKey',
+                  title: "Belalang Terdeteksi",
+                  body: 'Periksa gambar pada aplikasi dan tanaman sekarang !'));
         } else if (tidakAdaBelalangTerdeteksi) {
           setPredictedCategory("Tidak Ada Belalang Terdeteksi");
         } else {
