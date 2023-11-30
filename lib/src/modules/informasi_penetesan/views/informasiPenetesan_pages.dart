@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -49,8 +51,10 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                   inactiveNavigatorColor: hitam2,
                   weekStartFrom: WeekStartFrom.Monday,
                   onDateChange: (date) {
+                    print("tanggal info nutrisi :" +
+                        controller.selectedDate.toString());
                     controller.updateSelectedDate(date);
-                    controller.fetchData();
+                    controller.getDataFromRealtimeDatabase(date);
                   },
                 ),
                 SizedBox(height: 30),
@@ -93,72 +97,85 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
     );
   }
 
-  Widget listInfoNutrisi() {
-    if (controller.dataList.isEmpty) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    } else {
-      
+ Widget listInfoNutrisi() {
+  if (controller.dataList == null || controller.dataList.isEmpty) {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  } else {
+    return ListView.builder(
+      shrinkWrap: false,
+      itemCount: controller.dataList.length,
+      itemBuilder: (context, index) {
+        var rawData = controller.dataList[index];
+        if (rawData is Map<Object?, Object?>) {
+          var jsonData = json.decode(json.encode(rawData)) as Map<String, dynamic>;
 
-      return ListView.builder(
-          shrinkWrap: false,
-          itemCount: controller.dataList.length,
-          itemBuilder: (context, index) {
-            var data = controller.dataList[index];
-            return Padding(
-              padding: EdgeInsets.only(
-                left: paddingHorozontal1,
-                bottom: paddingVertical1,
-                right: paddingHorozontal1,
+          return Padding(
+            padding: EdgeInsets.only(
+              left: paddingHorozontal1,
+              bottom: paddingVertical1,
+              right: paddingHorozontal1,
+            ),
+            child: Container(
+              width: double.infinity,
+              height: 55,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(22),
+                color: const Color.fromARGB(255, 69, 170, 67),
               ),
-              child: Container(
-                width: double.infinity,
-                height: 55,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(22),
-                  color: const Color.fromARGB(255, 69, 170,
-                      67), // Ganti dengan warna latar belakang yang Anda inginkan
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${jsonData['jam']}",
+                      style: TextStyle(
+                        fontFamily: "font/inter_extrabold.ttf",
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      "ppm: ${jsonData['ppm']}",
+                      style: TextStyle(
+                        fontFamily: "font/inter_extrabold.ttf",
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      "pH: ${jsonData['ph']}",
+                      style: TextStyle(
+                        fontFamily: "font/inter_extrabold.ttf",
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      "Volume: ${jsonData['volume_air']}",
+                      style: TextStyle(
+                        fontFamily: "font/inter_extrabold.ttf",
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
                 ),
-                child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "${data['jam']}",
-                          style: TextStyle(
-                              fontFamily: "font/inter_extrabold.ttf",
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                              fontSize: 18),
-                        ),
-                        Text(
-                          "ppm: ${data['ppm']}",
-                          style: TextStyle(
-                              fontFamily: "font/inter_extrabold.ttf",
-                              color: Colors.white,
-                              fontSize: 16),
-                        ),
-                        Text(
-                          "pH:${data['ph']} ",
-                          style: TextStyle(
-                              fontFamily: "font/inter_extrabold.ttf",
-                              color: Colors.white,
-                              fontSize: 16),
-                        ),
-                        Text(
-                          "Volume:${data['volume_air']} ",
-                          style: TextStyle(
-                              fontFamily: "font/inter_extrabold.ttf",
-                              color: Colors.white,
-                              fontSize: 16),
-                        ),
-                      ],
-                    )),
               ),
-            );
-          });
-    }
+            ),
+          );
+        } else {
+          // Handle jika nilai dataList bukan Map<Object?, Object?>
+          return Center(
+            child: Text("Data tidak sesuai yang diharapkan"),
+          );
+        }
+      },
+    );
   }
+}
+
 }

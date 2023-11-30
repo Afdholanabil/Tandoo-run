@@ -233,7 +233,8 @@ class HomeViews extends GetView<HomeController> {
                                               fontWeight: FontWeight.w300),
                                         ),
                                       ),
-                                      Expanded(child: Obx(() {
+                                      Expanded(
+                                        child: Obx(() {
                                         var lates = controller.latestData;
                                         return Text(
                                           "${lates['ppm']} ppm",

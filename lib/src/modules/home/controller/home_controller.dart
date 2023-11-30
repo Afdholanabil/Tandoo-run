@@ -6,6 +6,7 @@ import 'package:tandu_run/config/api_client.dart';
 import 'package:tandu_run/model/akun_model.dart';
 import 'package:tandu_run/model/nutrisi_model.dart';
 import 'package:tandu_run/services/sharedPreference/user.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 DateTime now = DateTime.now();
 DateTime date = DateTime(now.year, now.month, now.day);
@@ -23,16 +24,19 @@ class HomeController extends GetxController {
   RxMap<String, dynamic> latestDataPPM = <String, dynamic>{}.obs;
 
   // TimeOfDay JamNow = TimeOfDay.now();
-  
+
   Rx<AkunModel> modelAkun = new AkunModel().obs;
   Rx<NutrisiModel> modelNutrisi = new NutrisiModel().obs;
+  DatabaseReference dbRef =
+      FirebaseDatabase.instance.reference().child('info_nutrisi');
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     // getDataAkun();
-    getDataFromFirestore();
+    // getDataFromFirestore();
+    getDataFromRealtimeDatabase();
     getUserData();
     // getDataNutrisiHomePagi();
     print("tanggal:" + formatDate.toString());
@@ -63,33 +67,60 @@ class HomeController extends GetxController {
     }
   }
 
-  getDataNutrisiHomePagi() async {
-    var data = await APIClient().postData(
-        'get_nilaiNutrisiPagi', {'hari_tanggal': formatDate.toString()});
-    if (data != null) {
-      modelNutrisi.value = nutrisiModelFromJson(data);
+  Future<void> getDataFromRealtimeDatabase() async {
+  dbRef.orderByKey().limitToLast(1).onValue.listen((event) {
+    if (event.snapshot.value != null) {
+      // Ambil data terbaru dari daftar (list) data yang ada
+      var latestDataKeys = (event.snapshot.value as Map).keys.toList();
+      if (latestDataKeys.isNotEmpty) {
+        var latestDataKey = latestDataKeys.first;
+        var latestDataValue = (event.snapshot.value as Map)[latestDataKey] as Map?;
+        if (latestDataValue != null) {
+          latestData.assignAll(latestDataValue.cast<String, dynamic>());
+          latestDataPPM.value = {'ppm': latestData['ppm']};
+        } else {
+          // Handle jika data tidak sesuai yang diharapkan
+          print("Data tidak sesuai yang diharapkan");
+        }
+      } else {
+        // Handle jika tidak ada data
+        print("Tidak ada data");
+      }
     } else {
-      print("Terdapat kesalahan");
+      // Handle jika snapshot null
+      print("Snapshot null");
     }
-  }
+  });
+}
 
-  getDataNutrisiHomeSiang() async {
-    var data = await APIClient().postData(
-        'get_nilaiNutrisiSiang', {'hari_tanggal': formatDate.toString()});
-    if (data != null) {
-      modelNutrisi.value = nutrisiModelFromJson(data);
-    } else {
-      print("Terdapat kesalahan");
-    }
-  }
 
-  getDataNutrisiHomeMalam() async {
-    var data = await APIClient().postData(
-        'get_nilaiNutrisiMalam', {'hari_tanggal': formatDate.toString()});
-    if (data != null) {
-      modelNutrisi.value = nutrisiModelFromJson(data);
-    } else {
-      print("Terdapat kesalahan");
-    }
-  }
+  // getDataNutrisiHomePagi() async {
+  //   var data = await APIClient().postData(
+  //       'get_nilaiNutrisiPagi', {'hari_tanggal': formatDate.toString()});
+  //   if (data != null) {
+  //     modelNutrisi.value = nutrisiModelFromJson(data);
+  //   } else {
+  //     print("Terdapat kesalahan");
+  //   }
+  // }
+
+  // getDataNutrisiHomeSiang() async {
+  //   var data = await APIClient().postData(
+  //       'get_nilaiNutrisiSiang', {'hari_tanggal': formatDate.toString()});
+  //   if (data != null) {
+  //     modelNutrisi.value = nutrisiModelFromJson(data);
+  //   } else {
+  //     print("Terdapat kesalahan");
+  //   }
+  // }
+
+  // getDataNutrisiHomeMalam() async {
+  //   var data = await APIClient().postData(
+  //       'get_nilaiNutrisiMalam', {'hari_tanggal': formatDate.toString()});
+  //   if (data != null) {
+  //     modelNutrisi.value = nutrisiModelFromJson(data);
+  //   } else {
+  //     print("Terdapat kesalahan");
+  //   }
+  // }
 }
