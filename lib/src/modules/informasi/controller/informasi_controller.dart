@@ -24,4 +24,5 @@ class informasiController extends GetxController {
   keluarApp() => Get.offAllNamed(Routes.login);
   masukInformasiHama() => Get.toNamed(Routes.informasiHama);
   masukInformasiPenetesan() => Get.toNamed(Routes.informasiPenetesan);
+  masukInformasiPenetesan2() => Get.toNamed(Routes.informasiPenetesan2);
 }

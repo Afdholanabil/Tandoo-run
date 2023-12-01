@@ -10,6 +10,7 @@ import 'package:tandu_run/src/modules/home/views/home_views.dart';
 import 'package:tandu_run/src/modules/informasi_hama/bindings/informasiHama_binding.dart';
 import 'package:tandu_run/src/modules/informasi_hama/views/informasiHama_pages.dart';
 import 'package:tandu_run/src/modules/informasi_penetesan/binding/informasiPenetesan_binding.dart';
+import 'package:tandu_run/src/modules/informasi_penetesan/views/infoP_view.dart';
 import 'package:tandu_run/src/modules/informasi_penetesan/views/informasiPenetesan_pages.dart';
 
 import 'package:tandu_run/src/modules/login/bindings/login_bindings.dart';
@@ -57,6 +58,11 @@ class AppPages {
     GetPage(
         name: Routes.home,
         page: () => HomeViews(),
-        binding: HomeBindings())
+        binding: HomeBindings()),
+
+        GetPage(
+        name: Routes.informasiPenetesan2,
+        page: () => infoP(),
+        binding: informasiHamaBinding())
   ];
 }

@@ -28,7 +28,7 @@ class HomeController extends GetxController {
   Rx<AkunModel> modelAkun = new AkunModel().obs;
   Rx<NutrisiModel> modelNutrisi = new NutrisiModel().obs;
   DatabaseReference dbRef =
-      FirebaseDatabase.instance.reference().child('info_nutrisi');
+      FirebaseDatabase.instance.ref().child('info_nutrisi');
 
   @override
   void onInit() {
@@ -68,31 +68,31 @@ class HomeController extends GetxController {
   }
 
   Future<void> getDataFromRealtimeDatabase() async {
-  dbRef.orderByKey().limitToLast(1).onValue.listen((event) {
-    if (event.snapshot.value != null) {
-      // Ambil data terbaru dari daftar (list) data yang ada
-      var latestDataKeys = (event.snapshot.value as Map).keys.toList();
-      if (latestDataKeys.isNotEmpty) {
-        var latestDataKey = latestDataKeys.first;
-        var latestDataValue = (event.snapshot.value as Map)[latestDataKey] as Map?;
-        if (latestDataValue != null) {
-          latestData.assignAll(latestDataValue.cast<String, dynamic>());
-          latestDataPPM.value = {'ppm': latestData['ppm']};
+    dbRef.orderByKey().limitToLast(1).onValue.listen((event) {
+      if (event.snapshot.value != null) {
+        // Ambil data terbaru dari daftar (list) data yang ada
+        var latestDataKeys = (event.snapshot.value as Map).keys.toList();
+        if (latestDataKeys.isNotEmpty) {
+          var latestDataKey = latestDataKeys.first;
+          var latestDataValue =
+              (event.snapshot.value as Map)[latestDataKey] as Map?;
+          if (latestDataValue != null) {
+            latestData.assignAll(latestDataValue.cast<String, dynamic>());
+            latestDataPPM.value = {'ppm': latestData['ppm']};
+          } else {
+            // Handle jika data tidak sesuai yang diharapkan
+            print("Data tidak sesuai yang diharapkan");
+          }
         } else {
-          // Handle jika data tidak sesuai yang diharapkan
-          print("Data tidak sesuai yang diharapkan");
+          // Handle jika tidak ada data
+          print("Tidak ada data");
         }
       } else {
-        // Handle jika tidak ada data
-        print("Tidak ada data");
+        // Handle jika snapshot null
+        print("Snapshot null");
       }
-    } else {
-      // Handle jika snapshot null
-      print("Snapshot null");
-    }
-  });
-}
-
+    });
+  }
 
   // getDataNutrisiHomePagi() async {
   //   var data = await APIClient().postData(

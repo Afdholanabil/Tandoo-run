@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -7,18 +6,109 @@ import 'package:tandu_run/model/nutrisi_model.dart';
 
 DateTime now = DateTime.now();
 DateTime date = DateTime(now.day, now.month, now.year);
-String formatDate = DateFormat('dd-MM-yyyy').format(date);
 
 class informasiPenetesanController extends GetxController {
-  Rx<DateTime> selectedDate = date.obs;
-  Rx<String> selectedDate2 = formatDate.obs;
-  Rx<NutrisiModel> modelNutrisiPagi = new NutrisiModel().obs;
-  Rx<NutrisiModel> modelNutrisiSiang = new NutrisiModel().obs;
-  Rx<NutrisiModel> modelNutrisiMalam = new NutrisiModel().obs;
+  String formatDate = DateFormat('dd-MM-yyyy').format(date);
 
-RxList<Map<String, dynamic>> dataList = <Map<String, dynamic>>[].obs;
-  DatabaseReference dbRef =
-      FirebaseDatabase.instance.ref().child('info_nutrisi');
+  var data88 = null;
+  var dataku = null;
+  Rx<DateTime> selectedDate = date.obs;
+  DatabaseReference _databaseReference = FirebaseDatabase.instance.reference();
+
+  RxList<Map<String, dynamic>> allNutrisi = <Map<String, dynamic>>[].obs;
+  RxList<Map<String, dynamic>> filteredNutrisi = <Map<String, dynamic>>[].obs;
+
+  // Fungsi untuk membaca data dari Firebase Realtime Database
+  Future<void> readDataFromFirebase() async {
+    var event = await _databaseReference.child('info_nutrisi').once();
+    DataSnapshot dataSnapshot = event.snapshot;
+    // Map<String, Map<String, dynamic>> data = {
+
+    // };
+    // Map<String, Map<String, dynamic>> data =
+    dataku = dataSnapshot.value as Map<dynamic, dynamic>;
+    if (dataku.isNotEmpty || dataku == null) {
+      // allNutrisi.addAll(dataku.values.cast<Map<String, dynamic>>());
+
+      print('ini data');
+      print(dataku);
+      String formatDate = DateFormat('yyyy-MM-dd')
+          .format(DateTime.parse(selectedDate.value.toString()));
+
+      print("formatDate:" + formatDate.toString());
+
+      String targetTanggal = formatDate; // Ganti dengan tanggal yang Anda cari
+
+      print("tanggal target:" + targetTanggal);
+
+      String? foundKey;
+
+      dataku.forEach((key, value) {
+        if (value['hari_tanggal'] == targetTanggal) {
+          foundKey = key;
+          data88 = value;
+          if (data88 != null) {
+            print("data88:" + data88.toString());
+            // filteredNutrisi.add(value);
+
+            // print(value);
+            return data88;
+            // return value; // Hentikan perulangan jika tanggal ditemukan
+          } else {
+            print("data pada tanggal $targetTanggal dari firebase null");
+          }
+        }
+        // print("data pada tanggal $targetTanggal dari firebase null");
+        // return null;
+      });
+      if (foundKey != null) {
+        // If data is found for the target date, update the UI
+        update();
+      }
+    } else {
+      print("data dari firebase null");
+    }
+    // print(data88['volume_air']);
+
+    // dynamic test = dataku['volume_air'];
+    // print(test.toString());
+    // dataku.forEach((key, value) {
+    //   print('Kunci: $key');
+    //   print('Isi:');
+    //   value.forEach((innerKey, innerValue) {
+
+    //     print('$innerKey: $innerValue');
+    //   });
+    //   print('---');
+    // });
+    // print(dataku['cek_1']['hari_tanggal']);
+    // if (dataku != null) {
+    //   var data = dataSnapshot.value;
+
+    //   if (data is Map) {
+    //     // Mengambil semua nilai dari "info_nutrisi" dan mengonversinya ke List<Map<String, dynamic>>
+    // allNutrisi.assignAll(data.values.cast<Map<String, dynamic>>());
+    //     // Memastikan filteredNutrisi juga diperbarui
+    //     updateFilteredData();
+    //   } else {
+    //     // Handle situasi jika tipe data tidak sesuai dengan ekspektasi
+    //     print('Tipe data tidak sesuai dengan ekspektasi: $data');
+    //   }
+    // } else {
+    //   // Handle situasi jika nilai null
+    //   print('Data dari Firebase adalah null.');
+    // }
+  }
+
+  // Fungsi untuk memperbarui data yang difilter
+  // void updateFilteredData() {
+  //   // Ganti dengan tanggal yang sesuai
+  //   String selectedDate = '2023-11-30';
+  //   filteredNutrisi.assignAll(getDataByDate(selectedDate));
+  // }
+
+  // RxList<Map<String, dynamic>> dataList = <Map<String, dynamic>>[].obs;
+  // Query dbRef = FirebaseDatabase.instance.ref().child('info_nutrisi');
 
   // Future<void> fetchData() async {
   //   try {
@@ -54,7 +144,10 @@ RxList<Map<String, dynamic>> dataList = <Map<String, dynamic>>[].obs;
     // getDataNutrisiSiangTertentu();
     // getDataNutrisiMalamTertentu();
     // fetchData();
-    getDataFromRealtimeDatabase(selectedDate.value);
+    // getDataFromRealtimeDatabase2(selectedDate.value);
+    // fetchDataForSelectedDate(selectedDate.value);
+    updateSelectedDate(selectedDate.value);
+    readDataFromFirebase();
   }
 
   void updateSelectedDate(DateTime newDate) {
@@ -93,31 +186,73 @@ RxList<Map<String, dynamic>> dataList = <Map<String, dynamic>>[].obs;
 //     }
 //   });
 // }
+  // Future<void> fetchDataForSelectedDate(DateTime selectedDate) async {
+  //   String formattedDate = DateFormat('dd-MM-yyyy').format(selectedDate);
 
-  Future<void> getDataFromRealtimeDatabase(DateTime date) async {
-    String contohTanggal = DateFormat('dd-MM-yyyy').format(date);
+  //   try {
+  //     // Assuming you have a DatabaseReference named dbRef declared in your class
+  //     dbRef = FirebaseDatabase.instance
+  //         .reference()
+  //         .child('info_nutrisi/$formattedDate');
 
-    dbRef
-        .orderByChild('hari_tanggal')
-        .equalTo(contohTanggal)
-        .onValue
-        .listen((event) {
-      if (event.snapshot.value != null) {
-        var latestDataValues =
-            (event.snapshot.value as Map<String, dynamic>).values.toList();
-        if (latestDataValues.isNotEmpty) {
-          // Ganti baris berikut dengan pembaruan RxList
-          dataList.assignAll(latestDataValues.cast<Map<String, dynamic>>());
-          print("panjang data" + dataList.length.toString());
-        } else {
-          print("Data tidak sesuai yang diharapkan");
-        }
-      } else {
-        print("panjang datalist null :" + dataList.length.toString());
-        print("Snapshot null");
-      }
-    });
-  }
+  //     // Fetch data from Firebase using dbRef
+  //     DatabaseEvent databaseEvent = await dbRef.once();
+
+  //     // Access data snapshot from DatabaseEvent
+  //     DataSnapshot dataSnapshot = databaseEvent.snapshot;
+
+  //     // Process the fetched data as needed
+  //     Map<String, dynamic>? data = dataSnapshot.value as Map<String, dynamic>?;
+
+  //     // Example: If you have a list in your controller to store the data
+  //     // Replace 'yourDataList' with the actual list in your controller
+  //     dataList.clear(); // Clear the existing data
+  //     if (data != null) {
+  //       data.forEach((key, value) {
+  //         if (value is Map<String, dynamic>) {
+  //           // Assuming each item is a Map<String, dynamic>
+  //           Map<String, dynamic> item = value;
+  //           item['key'] = key;
+  //           dataList.add(item);
+  //         } else {
+  //           // Handle if the item is not in the expected format
+  //           print("Item not in the expected format");
+  //         }
+  //       });
+  //     }
+
+  //     // Update state using GetX update
+  //     update(); // or use other update methods as needed
+  //   } catch (error) {
+  //     // Handle errors
+  //     print("Error fetching data: $error");
+  //   }
+  // }
+
+  // Future<void> getDataFromRealtimeDatabase2(DateTime date) async {
+  //   String contohTanggal = DateFormat('yyyy-MM-dd').format(date);
+
+  //   dbRef
+  //       .orderByChild('hari_tanggal')
+  //       .equalTo(contohTanggal)
+  //       .onValue
+  //       .listen((event) {
+  //     if (event.snapshot.value != null) {
+  //       var latestDataValues =
+  //           (event.snapshot.value as Map<String, dynamic>).values.toList();
+  //       if (latestDataValues.isNotEmpty) {
+  //         // Ganti baris berikut dengan pembaruan RxList
+  //         dataList.assignAll(latestDataValues.cast<Map<String, dynamic>>());
+  //         print("panjang data" + dataList.length.toString());
+  //       } else {
+  //         print("Data tidak sesuai yang diharapkan");
+  //       }
+  //     } else {
+  //       print("panjang datalist null :" + dataList.length.toString());
+  //       print("Snapshot null");
+  //     }
+  //   });
+  // }
 
   // Future<void> getDataFromRealtimeDatabase2() async {
   //   String contohTanggal = formatDate;

@@ -10,6 +10,7 @@ abstract class Routes {
   static const kelola = '/kelola';
   static const informasi = '/informasi';
   static const informasiPenetesan = '/informasiPenetesan';
+  static const informasiPenetesan2 = '/informasiPenetesan2';
   static const informasiHama = '/informasiHama';
   static const berhasilUbahPw = '/berhasil_ubahSandi';
 
