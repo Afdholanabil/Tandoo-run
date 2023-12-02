@@ -12,6 +12,7 @@ class informasiPenetesanController extends GetxController {
 
   var data88 = null;
   Rx<Map<String, dynamic>?> data88_2 = Rx<Map<String, dynamic>?>({});
+  RxList<Map<String, dynamic>> dataList = <Map<String, dynamic>>[].obs;
 
   var dataku = null;
   Map<String, Map<String, dynamic>> dataku_2 = {};
@@ -56,6 +57,7 @@ class informasiPenetesanController extends GetxController {
         print("tanggal target:" + targetTanggal.value);
 
         filteredData.clear();
+        dataList.clear();
         // Set data88_2.value menjadi null di awal
         data88_2.value = null;
 
@@ -69,6 +71,7 @@ class informasiPenetesanController extends GetxController {
                 // Cek jika 'hari_tanggal' sama dengan selectedDate, tambahkan ke filteredData
                 if (value['hari_tanggal'] == formatDate) {
                   filteredData[key] = value;
+                  dataList.add(value.cast<String, dynamic>());
                 }
               } else {
                 print("data pada tanggal $targetTanggal dari firebase null");
@@ -84,6 +87,7 @@ class informasiPenetesanController extends GetxController {
 
         // Gunakan filteredData sesuai kebutuhan
         print("Filtered Data: $filteredData");
+        print("DataList: $dataList");
       } else {
         print("data dari firebase null");
       }

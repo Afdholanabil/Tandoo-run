@@ -60,7 +60,6 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                     // controller.fetchDataForSelectedDate(date);
                     // controller.getDataFromRealtimeDatabase2(date);
                     controller.readDataFromFirebase(tanggal);
-                    
                   },
                 ),
                 SizedBox(height: 30),
@@ -213,7 +212,7 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
 
   Widget listInfoNutrisi() {
     // print("data88 view: memek" );
-    if (controller.data88_2.value == null) {
+    if (controller.dataList == null || controller.dataList.isEmpty) {
       print("data88 view1: " + controller.data88_2.toString());
       return Center(
         child: CircularProgressIndicator(),
@@ -223,8 +222,9 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
       print("data view2: " + controller.filteredData.toString());
       return ListView.builder(
         shrinkWrap: false,
-        itemCount: controller.filteredData.length,
+        itemCount: controller.dataList.length,
         itemBuilder: (context, index) {
+          Map<String, dynamic> currentItem = controller.dataList[index];
           return Padding(
             padding: EdgeInsets.only(
               left: paddingHorozontal1,
@@ -244,7 +244,7 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${controller.data88_2.value!['jam']}",
+                      "${currentItem['jam']}",
                       style: TextStyle(
                         fontFamily: "font/inter_extrabold.ttf",
                         color: Colors.white,
@@ -253,7 +253,7 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                       ),
                     ),
                     Text(
-                      "ppm: ${controller.data88_2.value!['ppm']}",
+                      "ppm: ${currentItem['ppm']}",
                       style: TextStyle(
                         fontFamily: "font/inter_extrabold.ttf",
                         color: Colors.white,
@@ -261,7 +261,7 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                       ),
                     ),
                     Text(
-                      "pH: ${controller.data88_2.value!['ph']}",
+                      "pH: ${currentItem['ph']}",
                       style: TextStyle(
                         fontFamily: "font/inter_extrabold.ttf",
                         color: Colors.white,
@@ -269,7 +269,7 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                       ),
                     ),
                     Text(
-                      "Volume: ${controller.data88_2.value!['volume_air']}",
+                      "Volume: ${currentItem['volume_air']}",
                       style: TextStyle(
                         fontFamily: "font/inter_extrabold.ttf",
                         color: Colors.white,
