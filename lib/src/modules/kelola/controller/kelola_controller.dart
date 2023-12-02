@@ -1,14 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tandu_run/config/api_client.dart';
-import 'package:tandu_run/model/kelolaNutrisiModel.dart';
-import 'package:tandu_run/model/nutrisi_model.dart';
+
 import 'package:tandu_run/model/nutrisi_model_kelola.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:tandu_run/routes/app_routes.dart';
 import 'package:tandu_run/utils/app_style.dart';
 
@@ -26,19 +23,24 @@ class kelolaController extends GetxController {
   String kirim = "kirim";
   Rx<NutrisiModelKelola> modelNutrisi = new NutrisiModelKelola().obs;
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // FirebaseFirestore firestore = FirebaseFirestore.instance;
   RxMap<String, dynamic> latestData = <String, dynamic>{}.obs;
   RxMap<String, dynamic> latestDataPPM = <String, dynamic>{}.obs;
 
-  String latestInfoNutrisiId = '';
+  // String latestInfoNutrisiId = '';
+  late RxString latestInfoNutrisiId;
+  late RxInt latestInfoNutrisiPpm;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     // getDataNutrisiHomePagi();
-    getDataFromFirestore();
+    // getDataFromFirestore();
     inputPPM.value = TextEditingController();
+    latestInfoNutrisiId = ''.obs;
+    latestInfoNutrisiPpm = 0.obs;
+    fetchLatestInfoNutrisi();
   }
 
   @override
@@ -114,45 +116,137 @@ class kelolaController extends GetxController {
   // }
 
   // Misalnya, Anda memiliki fungsi untuk mengambil data dari Firestore
-  Future<void> getDataFromFirestore() async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('info_nutrisi')
-        .orderBy('hari_tanggal', descending: true)
-        .limit(1)
-        .get();
-    if (querySnapshot.docs.isNotEmpty) {
-      latestData
-          .assignAll(querySnapshot.docs.first.data() as Map<String, dynamic>);
-      latestDataPPM.value = {'ppm': latestData['ppm']};
-      latestInfoNutrisiId = querySnapshot.docs.first.id; // Simpan ID dokumen
+  // Future<void> getDataFromFirestore() async {
+  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //       .collection('info_nutrisi')
+  //       .orderBy('hari_tanggal', descending: true)
+  //       .limit(1)
+  //       .get();
+  //   if (querySnapshot.docs.isNotEmpty) {
+  //     latestData
+  //         .assignAll(querySnapshot.docs.first.data() as Map<String, dynamic>);
+  //     latestDataPPM.value = {'ppm': latestData['ppm']};
+  //     latestInfoNutrisiId = querySnapshot.docs.first.id; // Simpan ID dokumen
+  //   }
+  // }
+
+  // Future<void> addPpmDataToKontrolNutrisi(Map<String, dynamic> ppmData) async {
+  //   try {
+  //     String inputvalue = inputPPM?.value?.text ?? "Tidak ada nilai";
+  //     await FirebaseFirestore.instance.collection('kontrol_nutrisi').add({
+  //       'info_nutrisi_id': latestInfoNutrisiId, // Gunakan ID dokumen terakhir
+  //       'nilai_ppm_sensor': ppmData['ppm'],
+  //       'nilai_ppm_input':
+  //           inputvalue // Anda mungkin perlu mendapatkan nilai input dari user
+  //     });
+
+  //     Get.snackbar("Berhasil !",
+  //         "Input ppm anda berhasil terkirim!. Silahkan tunggu nilai ppm terbaru !",
+  //         backgroundColor: green, colorText: white);
+  //     Get.offAllNamed(Routes.dashboard);
+  //   } catch (e) {
+  //     if (e is FirebaseException) {
+  //       print("Firestore error code: ${e.code}");
+  //       print("Firestore error message: ${e.message}");
+  //     } else {
+  //       print("Error: $e");
+  //     }
+
+  //     Get.snackbar("Terjadi kesalahan !",
+  //         "Input anda gagal terkirim! Silahkan coba beberapa saat lagi ! ",
+  //         backgroundColor: red1, colorText: white);
+  //   }
+  // }
+
+  // Fungsi untuk mengambil data terbaru dari Firebase
+  // Fungsi untuk mengambil data terbaru dari Firebase
+  Future<void> fetchLatestInfoNutrisi() async {
+    DatabaseReference reference =
+        FirebaseDatabase.instance.reference().child('info_nutrisi');
+
+    try {
+      DatabaseEvent event = await reference.orderByKey().limitToLast(1).once();
+
+      if (event.snapshot.value != null) {
+        // Ambil data terbaru
+        Map<dynamic, dynamic> values =
+            (event.snapshot.value as Map<dynamic, dynamic>);
+        var latestKey = values.keys.first;
+        var latestData = values[latestKey];
+
+        // Update variabel penampung
+        latestInfoNutrisiId.value = latestKey;
+        latestInfoNutrisiPpm.value = (latestData['ppm'] as int);
+      }
+    } catch (error) {
+      // Tangani kesalahan di sini
+      print("Error fetching latest info nutrisi: $error");
     }
   }
 
-  Future<void> addPpmDataToKontrolNutrisi(Map<String, dynamic> ppmData) async {
+  Future<void> createNewKontrol() async {
     try {
-      String inputvalue = inputPPM?.value?.text ?? "Tidak ada nilai";
-      await FirebaseFirestore.instance.collection('kontrol_nutrisi').add({
-        'info_nutrisi_id': latestInfoNutrisiId, // Gunakan ID dokumen terakhir
-        'nilai_ppm_sensor': ppmData['ppm'],
-        'nilai_ppm_input':
-            inputvalue // Anda mungkin perlu mendapatkan nilai input dari user
-      });
+      DatabaseReference reference =
+          FirebaseDatabase.instance.reference().child('kontrol_nutrisi');
 
+      // Ambil nilai dari input_ppm Controller
+      int inputPpm = int.tryParse(inputPPM.value.text) ?? 0;
+
+      // Dapatkan nilai terbaru dari kontrol_id
+      int latestKontrolId = await getLatestKontrolId();
+
+      // Lakukan increment pada nilai kontrol_id
+      int newKontrolId = latestKontrolId + 1;
+
+      // Buat map data kontrol baru
+      Map<String, dynamic> newKontrol = {
+        'info_nutrisi_id': latestInfoNutrisiId.value,
+        'info_nutrisi_ppm': latestInfoNutrisiPpm.value,
+        'input_ppm': inputPpm,
+      };
+
+      // Simpan data ke Firebase dengan menggunakan ID yang baru
+      reference.child('kontrol_$newKontrolId').set(newKontrol).then((_) {
+        // Reset input_ppm Controller
+        inputPPM.value.clear();
+
+        // Panggil fungsi untuk mengambil data terbaru
+        fetchLatestInfoNutrisi();
+      });
       Get.snackbar("Berhasil !",
           "Input ppm anda berhasil terkirim!. Silahkan tunggu nilai ppm terbaru !",
           backgroundColor: green, colorText: white);
       Get.offAllNamed(Routes.dashboard);
     } catch (e) {
-      if (e is FirebaseException) {
-        print("Firestore error code: ${e.code}");
-        print("Firestore error message: ${e.message}");
-      } else {
-        print("Error: $e");
-      }
-
       Get.snackbar("Terjadi kesalahan !",
           "Input anda gagal terkirim! Silahkan coba beberapa saat lagi ! ",
           backgroundColor: red1, colorText: white);
+    }
+  }
+
+// Fungsi untuk mendapatkan nilai terbaru dari kontrol_id
+  Future<int> getLatestKontrolId() async {
+    DatabaseReference reference =
+        FirebaseDatabase.instance.reference().child('kontrol_nutrisi');
+
+    // Menggunakan method once() dari firebase_database
+    // dan mengubah tipe hasilnya menjadi DatabaseEvent
+    DatabaseEvent event =
+        await reference.orderByKey().limitToLast(1).once() as DatabaseEvent;
+
+    if (event.snapshot.value != null) {
+      // Ambil data terbaru
+      Map<dynamic, dynamic> values =
+          (event.snapshot.value as Map<dynamic, dynamic>);
+      var latestKey = values.keys.first;
+
+      // Ekstrak nilai kontrol_id
+      int latestKontrolId =
+          int.tryParse(latestKey.replaceFirst('kontrol_', '')) ?? 0;
+
+      return latestKontrolId;
+    } else {
+      return 0; // Jika tidak ada data, kembalikan nilai awal
     }
   }
 }

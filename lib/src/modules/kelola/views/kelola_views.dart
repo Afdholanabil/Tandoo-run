@@ -179,9 +179,9 @@ class kelolaPages extends GetView<kelolaController> {
                                           child: Expanded(
                                             flex: 2,
                                             child: Obx(() {
-                                              var lates = controller.latestData;
+                                              // var lates = controller.latestData;
                                               return Text(
-                                                "${lates['ppm']} ppm",
+                                                "${controller.latestInfoNutrisiPpm} ppm",
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(
                                                     fontFamily:
@@ -279,9 +279,10 @@ class kelolaPages extends GetView<kelolaController> {
                                         splashColor: white,
                                         highlightColor: white,
                                         onTap: () async {
-                                          var latesPPM = controller.latestDataPPM;
-                                          await controller.addPpmDataToKontrolNutrisi(
-                                                  latesPPM);
+                                          // var latesPPM = controller.latestDataPPM;
+                                          // await controller.addPpmDataToKontrolNutrisi(
+                                          //         latesPPM);
+                                          controller.createNewKontrol();
                                         },
                                         child: SizedBox(
                                             height: 50,
