@@ -11,63 +11,86 @@ class informasiPenetesanController extends GetxController {
   String formatDate = DateFormat('dd-MM-yyyy').format(date);
 
   var data88 = null;
+  Rx<Map<String, dynamic>?> data88_2 = Rx<Map<String, dynamic>?>({});
+
   var dataku = null;
+  Map<String, Map<String, dynamic>> dataku_2 = {};
+
   Rx<DateTime> selectedDate = date.obs;
   DatabaseReference _databaseReference = FirebaseDatabase.instance.reference();
 
   RxList<Map<String, dynamic>> allNutrisi = <Map<String, dynamic>>[].obs;
   RxList<Map<String, dynamic>> filteredNutrisi = <Map<String, dynamic>>[].obs;
+  // Tambahkan variabel filteredData
+  Map<String, Map<String, dynamic>> filteredData = {};
 
-  // Fungsi untuk membaca data dari Firebase Realtime Database
-  Future<void> readDataFromFirebase() async {
+  Future<void> readDataFromFirebase(String tanggal) async {
     var event = await _databaseReference.child('info_nutrisi').once();
     DataSnapshot dataSnapshot = event.snapshot;
-    // Map<String, Map<String, dynamic>> data = {
 
-    // };
-    // Map<String, Map<String, dynamic>> data =
-    dataku = dataSnapshot.value as Map<dynamic, dynamic>;
-    if (dataku.isNotEmpty || dataku == null) {
-      // allNutrisi.addAll(dataku.values.cast<Map<String, dynamic>>());
+    var dataSnapshotValue = dataSnapshot.value;
+    print("Struktur data aktual: $dataSnapshotValue");
 
-      print('ini data');
-      print(dataku);
-      String formatDate = DateFormat('yyyy-MM-dd')
-          .format(DateTime.parse(selectedDate.value.toString()));
-
-      print("formatDate:" + formatDate.toString());
-
-      String targetTanggal = formatDate; // Ganti dengan tanggal yang Anda cari
-
-      print("tanggal target:" + targetTanggal);
-
-      String? foundKey;
-
-      dataku.forEach((key, value) {
-        if (value['hari_tanggal'] == targetTanggal) {
-          foundKey = key;
-          data88 = value;
-          if (data88 != null) {
-            print("data88:" + data88.toString());
-            // filteredNutrisi.add(value);
-
-            // print(value);
-            return data88;
-            // return value; // Hentikan perulangan jika tanggal ditemukan
-          } else {
-            print("data pada tanggal $targetTanggal dari firebase null");
-          }
+    if (dataSnapshotValue != null &&
+        dataSnapshotValue is Map<dynamic, dynamic>) {
+      Map<String, Map<String, dynamic>> dataku_2 =
+          dataSnapshotValue.map((key, value) {
+        if (value is Map<dynamic, dynamic>) {
+          return MapEntry(key.toString(), value.cast<String, dynamic>());
+        } else {
+          return MapEntry(key.toString(), <String, dynamic>{});
         }
-        // print("data pada tanggal $targetTanggal dari firebase null");
-        // return null;
       });
-      if (foundKey != null) {
-        // If data is found for the target date, update the UI
-        update();
+
+      if (dataku_2.isNotEmpty) {
+        print('ini data');
+        print(dataku_2);
+        String formatDate = DateFormat('yyyy-MM-dd')
+            .format(DateTime.parse(selectedDate.value.toString()));
+
+        print("formatDate:" + formatDate.toString());
+
+        Rx<String> targetTanggal =
+            formatDate.obs; // Ganti dengan tanggal yang Anda cari
+
+        print("tanggal target:" + targetTanggal.value);
+
+        filteredData.clear();
+        // Set data88_2.value menjadi null di awal
+        data88_2.value = null;
+
+        dataku_2.forEach((key, value) {
+          if (value != null && value is Map<String, dynamic>) {
+            if (value['hari_tanggal'] == tanggal) {
+              data88_2.value = value.cast<String, dynamic>();
+              if (data88_2.value != null) {
+                print("data88_2: ${data88_2.value}");
+
+                // Cek jika 'hari_tanggal' sama dengan selectedDate, tambahkan ke filteredData
+                if (value['hari_tanggal'] == formatDate) {
+                  filteredData[key] = value;
+                }
+              } else {
+                print("data pada tanggal $targetTanggal dari firebase null");
+              }
+            } else {
+              print("Tanggal $targetTanggal tidak memiliki data, $data88_2");
+            }
+          } else {
+            print(
+                "Data does not match the expected structure, value struktur is $value");
+          }
+        });
+
+        // Gunakan filteredData sesuai kebutuhan
+        print("Filtered Data: $filteredData");
+      } else {
+        print("data dari firebase null");
       }
     } else {
-      print("data dari firebase null");
+      print("Tipe data tidak sesuai yang diharapkan");
     }
+
     // print(data88['volume_air']);
 
     // dynamic test = dataku['volume_air'];
@@ -147,7 +170,7 @@ class informasiPenetesanController extends GetxController {
     // getDataFromRealtimeDatabase2(selectedDate.value);
     // fetchDataForSelectedDate(selectedDate.value);
     updateSelectedDate(selectedDate.value);
-    readDataFromFirebase();
+    readDataFromFirebase(selectedDate.value.toString());
   }
 
   void updateSelectedDate(DateTime newDate) {

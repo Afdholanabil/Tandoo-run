@@ -59,7 +59,8 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                     controller.updateSelectedDate(DateTime.parse(tanggal));
                     // controller.fetchDataForSelectedDate(date);
                     // controller.getDataFromRealtimeDatabase2(date);
-                    controller.readDataFromFirebase();
+                    controller.readDataFromFirebase(tanggal);
+                    
                   },
                 ),
                 SizedBox(height: 30),
@@ -85,53 +86,52 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
           const SizedBox(height: 10),
           Align(
             child: Container(
-              height: MediaQuery.of(context).size.height / 1.75,
-              width: 450,
-              padding: EdgeInsets.symmetric(
-                  horizontal: paddingHorozontal1, vertical: paddingVertical1),
-              child:  Text(controller.data88 != null ? controller.data88!['ph'].toString() : "Data is null")
+                height: MediaQuery.of(context).size.height / 1.75,
+                width: 450,
+                padding: EdgeInsets.symmetric(
+                    horizontal: paddingHorozontal1, vertical: paddingVertical1),
+                child: Obx(() => listInfoNutrisi())
 
+                // FutureBuilder<void>(
+                //   future: controller
+                //       .fetchDataForSelectedDate(controller.selectedDate.value),
+                //   builder: (context, snapshot) {
+                //     if (snapshot.connectionState == ConnectionState.waiting) {
+                //       return CircularProgressIndicator();
+                //     } else if (snapshot.hasError) {
+                //       return Text('Error: ${snapshot.error}');
+                //     } else if (controller.dbRef == null ||
+                //         controller.dataList.isEmpty) {
+                //       return Text(
+                //           'Tidak ada data'); // atau widget lain jika tidak ada data
+                //     } else {
+                //       // Your existing FirebaseAnimatedList
+                //       return FirebaseAnimatedList(
+                //         query: controller.dbRef,
+                //         itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                //             Animation<double> animation, int index) {
+                //           Map nutrisi = snapshot.value as Map;
+                //           nutrisi['key'] = snapshot.key;
 
-              // FutureBuilder<void>(
-              //   future: controller
-              //       .fetchDataForSelectedDate(controller.selectedDate.value),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return CircularProgressIndicator();
-              //     } else if (snapshot.hasError) {
-              //       return Text('Error: ${snapshot.error}');
-              //     } else if (controller.dbRef == null ||
-              //         controller.dataList.isEmpty) {
-              //       return Text(
-              //           'Tidak ada data'); // atau widget lain jika tidak ada data
-              //     } else {
-              //       // Your existing FirebaseAnimatedList
-              //       return FirebaseAnimatedList(
-              //         query: controller.dbRef,
-              //         itemBuilder: (BuildContext context, DataSnapshot snapshot,
-              //             Animation<double> animation, int index) {
-              //           Map nutrisi = snapshot.value as Map;
-              //           nutrisi['key'] = snapshot.key;
+                //           String firebaseDate = nutrisi['hari_tanggal'];
+                //           String selectedDate = DateFormat('dd-MM-yyyy').format(
+                //               controller.selectedDate.value ?? DateTime.now());
 
-              //           String firebaseDate = nutrisi['hari_tanggal'];
-              //           String selectedDate = DateFormat('dd-MM-yyyy').format(
-              //               controller.selectedDate.value ?? DateTime.now());
+                //           print("Firebase Date: ${firebaseDate}");
+                //           print("Selected Date: ${selectedDate}");
 
-              //           print("Firebase Date: ${firebaseDate}");
-              //           print("Selected Date: ${selectedDate}");
-
-              //           // Check if hari_tanggal matches the selectedDate
-              //           if (firebaseDate == selectedDate) {
-              //             return listNutrisi(nutrisi: nutrisi);
-              //           } else {
-              //             return Text("Tidak ada data");
-              //           }
-              //         },
-              //       );
-              //     }
-              //   },
-              // ),
-            ),
+                //           // Check if hari_tanggal matches the selectedDate
+                //           if (firebaseDate == selectedDate) {
+                //             return listNutrisi(nutrisi: nutrisi);
+                //           } else {
+                //             return Text("Tidak ada data");
+                //           }
+                //         },
+                //       );
+                //     }
+                //   },
+                // ),
+                ),
           ),
           // SingleChildScrollView(
           //   child: Padding(
@@ -143,16 +143,15 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
     );
   }
 
-  Widget cekData(){
-
+  Widget cekData() {
     if (controller.data88 != null) {
-    // Use the data88 here
-    return Text(controller.data88!['ph'].toString());
-  } else {
-    return Text("Data is null");
+      // Use the data88 here
+      return Text(controller.data88!['ph'].toString());
+    } else {
+      return Text("Data is null");
+    }
   }
 
-  }
   Widget listNutrisi({required Map nutrisi}) {
     return Padding(
       padding: EdgeInsets.only(
@@ -214,17 +213,17 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
 
   Widget listInfoNutrisi() {
     // print("data88 view: memek" );
-    if (1 + 1 == 69) {
-    print("data88 view1: " + controller.data88.toString());
+    if (controller.data88_2.value == null) {
+      print("data88 view1: " + controller.data88_2.toString());
       return Center(
         child: CircularProgressIndicator(),
       );
     } else {
-    print("data88 view2: " + controller.data88.toString());
-    print("data view2: " + controller.dataku.toString());
+      print("data88 view2: " + controller.data88_2.toString());
+      print("data view2: " + controller.filteredData.toString());
       return ListView.builder(
         shrinkWrap: false,
-        itemCount: controller.allNutrisi.length,
+        itemCount: controller.filteredData.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: EdgeInsets.only(
@@ -245,7 +244,7 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${controller.data88['jam']}",
+                      "${controller.data88_2.value!['jam']}",
                       style: TextStyle(
                         fontFamily: "font/inter_extrabold.ttf",
                         color: Colors.white,
@@ -254,7 +253,7 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                       ),
                     ),
                     Text(
-                      "ppm: ${controller.data88['ppm']}",
+                      "ppm: ${controller.data88_2.value!['ppm']}",
                       style: TextStyle(
                         fontFamily: "font/inter_extrabold.ttf",
                         color: Colors.white,
@@ -262,7 +261,7 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                       ),
                     ),
                     Text(
-                      "pH: ${controller.data88['ph']}",
+                      "pH: ${controller.data88_2.value!['ph']}",
                       style: TextStyle(
                         fontFamily: "font/inter_extrabold.ttf",
                         color: Colors.white,
@@ -270,7 +269,7 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                       ),
                     ),
                     Text(
-                      "Volume: ${controller.data88['volume_air']}",
+                      "Volume: ${controller.data88_2.value!['volume_air']}",
                       style: TextStyle(
                         fontFamily: "font/inter_extrabold.ttf",
                         color: Colors.white,
