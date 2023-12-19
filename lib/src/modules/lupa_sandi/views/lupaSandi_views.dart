@@ -114,7 +114,7 @@ class lupaSandiPages extends GetView<lupaSandiController> {
                 child: Obx(() => InkWell(
                       splashColor: green,
                       highlightColor: green,
-                      onTap: () => authC.resetPW(controller.telp.value.text),
+                      onTap: () => authC.resetPW2(controller.telp.value.text),
                       child: SizedBox(
                         height: 50,
                         child: controller.isLoading.value

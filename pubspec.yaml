@@ -4,14 +4,14 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: '>=2.19.1 <4.0.0'
+  sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   
   get: ^4.6.5
-  flutter_svg: ^1.0.3
+ 
   intl: ^0.18.1
   date_picker_timeline: ^1.2.5
   animated_text_kit: ^4.2.2
@@ -25,7 +25,7 @@ dependencies:
   cloud_firestore: ^4.13.2
   awesome_notifications: ^0.8.2
   firebase_database: ^10.3.6
-  
+  flutter_svg: ^2.0.9
   
   
 
@@ -38,6 +38,13 @@ flutter:
   uses-material-design: true
 
   assets:
+    - semuaAsset/svg/Category.svg
+    - semuaAsset/svg/Category2.svg
+    - semuaAsset/svg/cockroach.svg
+    - semuaAsset/svg/Document.svg
+    - semuaAsset/svg/Document2.svg
+    - semuaAsset/svg/Plus.svg
+    - semuaAsset/svg/Plus2.svg
     - semuaAsset/
     - semuaAsset/gambar/awal.png
     - semuaAsset/gambar/home.png

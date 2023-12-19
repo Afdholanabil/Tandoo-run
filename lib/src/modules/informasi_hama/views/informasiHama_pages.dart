@@ -124,6 +124,7 @@ class InformasiHamaPages extends GetView<informasiHamaController> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30))),
                         height: SizeConfig.screenHeightHalf,
+                        width: SizeConfig.screenWidth,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
@@ -149,8 +150,7 @@ class InformasiHamaPages extends GetView<informasiHamaController> {
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
-                    return Align(
-                      alignment: Alignment.center,
+                    return Center(
                       child: Text(
                           'Tidak ada penangkapan gambar pada hari tersebut'),
                     );

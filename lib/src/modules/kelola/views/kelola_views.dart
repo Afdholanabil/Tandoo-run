@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:tandu_run/routes/app_routes.dart';
@@ -151,17 +152,16 @@ class kelolaPages extends GetView<kelolaController> {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child:
-                                      Image.asset('semuaAsset/gambar/awal.png'),
+                                      Image.asset('semuaAsset/gambar/home_molekul.png'),
                                 ),
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Expanded(
-                                          flex: 1,
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
                                           child: Text(
                                             "Kondisi ppm saat ini",
                                             textAlign: TextAlign.right,
@@ -174,10 +174,9 @@ class kelolaPages extends GetView<kelolaController> {
                                           ),
                                         ),
                                       ),
-                                      Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: Expanded(
-                                            flex: 2,
+                                      Expanded(
+                                        child: Align(
+                                            alignment: Alignment.bottomRight,
                                             child: Obx(() {
                                               // var lates = controller.latestData;
                                               return Text(
@@ -191,8 +190,8 @@ class kelolaPages extends GetView<kelolaController> {
                                                     fontWeight:
                                                         FontWeight.w700),
                                               );
-                                            }),
-                                          ))
+                                            })),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -241,6 +240,10 @@ class kelolaPages extends GetView<kelolaController> {
                                                 color: Colors.white70,
                                                 width: 2))),
                                     child: TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       controller: controller.inputPPM.value,
                                       cursorColor: Colors.white,
                                       style: TextStyle(

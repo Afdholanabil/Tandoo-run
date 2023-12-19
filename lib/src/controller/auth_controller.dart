@@ -49,16 +49,32 @@ class AuthController extends GetxController {
   }
 
   void logout() async {
-    await FirebaseAuth.instance.signOut();
-    // Get.snackbar("Berhasil Keluar", "");
-    Get.offAllNamed(Routes.login);
+    try {
+      await FirebaseAuth.instance.signOut();
+      // Get.snackbar("Berhasil Keluar", "");
+      Get.offAllNamed(Routes.login);
+      Get.snackbar(
+          "Berhasil Keluar", "Masukan alamat email dan password untuk login!",
+          backgroundColor: green, colorText: white);
+    } catch (r) {
+      print("error:" + r.toString());
+      Get.snackbar("Gagal Keluar", "Terdapat kesalahan, harap coba lagi nanti!",
+          backgroundColor: oren, colorText: white);
+    }
   }
 
   void resetPW(String emailP) async {
     if (emailP != "" && GetUtils.isEmail(emailP)) {
       try {
-        await auth.sendPasswordResetEmail(email: emailP);
-        Get.defaultDialog(
+        // Periksa apakah email sudah terdaftar
+        var methods =
+            await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailP);
+
+        if (methods.isNotEmpty) {
+          // Email terdaftar, kirim reset password
+          await FirebaseAuth.instance.sendPasswordResetEmail(email: emailP);
+
+          Get.defaultDialog(
             confirmTextColor: hitam2,
             buttonColor: green,
             title: "Berhasil",
@@ -67,13 +83,60 @@ class AuthController extends GetxController {
               Get.back();
               Get.back();
             },
-            textConfirm: "Ya, saya mengerti");
-      } catch (e) {
-        Get.defaultDialog(
+            textConfirm: "Ya, saya mengerti",
+          );
+        } else {
+          // Email tidak terdaftar
+          Get.defaultDialog(
             confirmTextColor: hitam2,
             buttonColor: oren,
             title: "Terjadi Kesalahan",
-            middleText: "Tidak dapat mengirimkan reset password.");
+            middleText: "Email tidak terdaftar.",
+          );
+        }
+      } catch (e) {
+        print("error:" + e.toString());
+        Get.defaultDialog(
+          confirmTextColor: hitam2,
+          buttonColor: oren,
+          title: "Terjadi Kesalahan",
+          middleText: "Tidak dapat mengirimkan reset password.",
+        );
+      }
+    } else {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan",
+        middleText: "Email tidak valid",
+        confirmTextColor: hitam2,
+        buttonColor: oren,
+      );
+    }
+  }
+
+  void resetPW2(String emailP) async {
+    if (emailP != "" && GetUtils.isEmail(emailP)) {
+      try {
+        // Periksa apakah email sudah terdaftar
+
+        Get.defaultDialog(
+          confirmTextColor: hitam2,
+          buttonColor: green,
+          title: "Berhasil",
+          middleText: "Cek email anda untuk melanjutkan reset password.",
+          onConfirm: () {
+            Get.back();
+            Get.back();
+          },
+          textConfirm: "Ya, saya mengerti",
+        );
+      } catch (e) {
+        print("error:" + e.toString());
+        Get.defaultDialog(
+          confirmTextColor: hitam2,
+          buttonColor: oren,
+          title: "Terjadi Kesalahan",
+          middleText: "Tidak dapat mengirimkan reset password.",
+        );
       }
     } else {
       Get.defaultDialog(

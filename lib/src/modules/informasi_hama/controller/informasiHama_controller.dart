@@ -24,6 +24,7 @@ class informasiHamaController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     getImagesByDate(predictedCategory.value);
+    updateSelectedDate(selectedDate.value);
   }
 
   // Method to set predicted category
@@ -160,11 +161,15 @@ class informasiHamaController extends GetxController {
         targetFolder =
             "imageProcessing/lainnya"; // Gantilah dengan folder default jika diperlukan
     }
+    print("button hari: $selectedButtonLabel");
 
     // Lakukan query atau filter gambar berdasarkan tanggal tertentu
     // Misalnya, kita mengambil semua gambar yang memiliki nama mengandung tanggal (format: yyyy-MM-dd)
+
     String dateFormatted =
         "${selectedDate.value.year}-${selectedDate.value.month.toString().padLeft(2, '0')}-${selectedDate.value.day.toString().padLeft(2, '0')}";
+
+    print("dateFormated :$dateFormatted");
 
     try {
       final ListResult listResult =
@@ -189,21 +194,24 @@ class informasiHamaController extends GetxController {
             terdeteksiBelalang = true;
           }
         }
-        // Set kategori berdasarkan hasil deteksi gambar
-        if (terdeteksiBelalang) {
-          setPredictedCategory("Terdeteksi Belalang");
-          AwesomeNotifications().createNotification(
-              content: NotificationContent(
-                  id: 1,
-                  channelKey: 'channelKey',
-                  title: "Belalang Terdeteksi",
-                  body: 'Periksa gambar pada aplikasi dan tanaman sekarang !'));
-        } else if (tidakAdaBelalangTerdeteksi) {
-          setPredictedCategory("Tidak Ada Belalang Terdeteksi");
-        } else {
-          // Jika tidak ada gambar yang terdeteksi, atur kategori default jika diperlukan
-          setPredictedCategory("Kategori Default");
-        }
+      }
+
+// Set kategori berdasarkan hasil deteksi gambar
+      if (terdeteksiBelalang) {
+        setPredictedCategory("Terdeteksi Belalang");
+        AwesomeNotifications().createNotification(
+          content: NotificationContent(
+            id: 1,
+            channelKey: 'channelKey',
+            title: "Belalang Terdeteksi",
+            body: 'Periksa gambar pada aplikasi dan tanaman sekarang !',
+          ),
+        );
+      } else if (tidakAdaBelalangTerdeteksi) {
+        setPredictedCategory("Tidak Ada Belalang Terdeteksi");
+      } else {
+        // Jika tidak ada gambar yang terdeteksi, atur kategori default jika diperlukan
+        setPredictedCategory("Kategori Default");
       }
 
       print("Jumlah data gambar: ${images.length}");

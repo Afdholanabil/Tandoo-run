@@ -69,6 +69,7 @@ class MyApp extends StatelessWidget {
         print(snapshot);
         if (snapshot.connectionState == ConnectionState.active) {
           return GetMaterialApp(
+            
             title: 'Tandoo-Run',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(

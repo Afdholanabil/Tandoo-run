@@ -46,7 +46,7 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
                   activeBackgroundColor: green,
                   inactiveBackgroundColor: white,
                   inactiveTextColor: hitam2,
-                  activeTextColor: hitam2,
+                  activeTextColor: white,
                   disabledBackgroundColor: white,
                   disabledTextColor: hitam2,
                   monthColor: green,
@@ -215,7 +215,7 @@ class informasiPenetesanPages extends GetView<informasiPenetesanController> {
     if (controller.dataList == null || controller.dataList.isEmpty) {
       print("data88 view1: " + controller.data88_2.toString());
       return Center(
-        child: CircularProgressIndicator(),
+        child: Text("Tidak ada pengecekan pada hari ini."),
       );
     } else {
       print("data88 view2: " + controller.data88_2.toString());
