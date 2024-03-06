@@ -178,9 +178,9 @@ class kelolaPages extends GetView<kelolaController> {
                                         child: Align(
                                             alignment: Alignment.bottomRight,
                                             child: Obx(() {
-                                              // var lates = controller.latestData;
+                                              var lates = controller.latestData;
                                               return Text(
-                                                "${controller.latestInfoNutrisiPpm} ppm",
+                                                "${lates['ppm']} ppm",
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(
                                                     fontFamily:

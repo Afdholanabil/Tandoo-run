@@ -27,9 +27,14 @@ class kelolaController extends GetxController {
   RxMap<String, dynamic> latestData = <String, dynamic>{}.obs;
   RxMap<String, dynamic> latestDataPPM = <String, dynamic>{}.obs;
 
+  RxMap<String, dynamic> latestInfoNutrisi = <String, dynamic>{}.obs;
+
   // String latestInfoNutrisiId = '';
   late RxString latestInfoNutrisiId;
   late RxInt latestInfoNutrisiPpm;
+
+  DatabaseReference dbRef =
+      FirebaseDatabase.instance.ref().child('info_nutrisi');
 
   @override
   void onInit() {
@@ -37,17 +42,17 @@ class kelolaController extends GetxController {
     super.onInit();
     // getDataNutrisiHomePagi();
     // getDataFromFirestore();
-    inputPPM.value = TextEditingController();
+    // inputPPM.value = TextEditingController();
     latestInfoNutrisiId = ''.obs;
     latestInfoNutrisiPpm = 0.obs;
-    fetchLatestInfoNutrisi();
+    // fetchLatestInfoNutrisi();
+    getDataFromRealtimeDatabase();
   }
 
   @override
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    inputPPM.value.dispose();
   }
 
   // getDataNutrisiHomePagi() async {
@@ -177,6 +182,8 @@ class kelolaController extends GetxController {
         // Update variabel penampung
         latestInfoNutrisiId.value = latestKey;
         latestInfoNutrisiPpm.value = (latestData['ppm'] as int);
+
+        update();
       }
     } catch (error) {
       // Tangani kesalahan di sini
@@ -184,10 +191,49 @@ class kelolaController extends GetxController {
     }
   }
 
+  Future<void> getDataFromRealtimeDatabase() async {
+    dbRef.orderByKey().limitToLast(1).onValue.listen((event) {
+      if (event.snapshot.value != null) {
+        // Ambil data terbaru dari daftar (list) data yang ada
+        var latestDataKeys = (event.snapshot.value as Map).keys.toList();
+        if (latestDataKeys.isNotEmpty) {
+          var latestDataKey = latestDataKeys.first;
+          var latestDataValue =
+              (event.snapshot.value as Map)[latestDataKey] as Map?;
+          if (latestDataValue != null) {
+            latestData.assignAll(latestDataValue.cast<String, dynamic>());
+            latestDataPPM.value = {'ppm': latestData['ppm']};
+
+            latestInfoNutrisiId.value = latestDataKey;
+            print("ID saat ini: $latestInfoNutrisiId");
+            // Tambahkan baris berikut untuk menetapkan nilai terkini ke latestInfoNutrisi
+            latestInfoNutrisi
+                .assignAll(latestDataValue.cast<String, dynamic>());
+          } else {
+            // Handle jika data tidak sesuai yang diharapkan
+            print("Data tidak sesuai yang diharapkan");
+          }
+        } else {
+          // Handle jika tidak ada data
+          print("Tidak ada data");
+        }
+      } else {
+        // Handle jika snapshot null
+        print("Snapshot null");
+      }
+    });
+  }
+
   Future<void> createNewKontrol() async {
     try {
       DatabaseReference reference =
           FirebaseDatabase.instance.reference().child('kontrol_nutrisi');
+
+      // Mendapatkan nilai terkini dari Firebase Realtime Database
+      var latestInfoNutrisiId2 =
+          latestInfoNutrisiId.value; // Gantilah 'id' dengan kunci yang sesuai
+      var latestInfoNutrisiPpm = latestInfoNutrisi['ppm'] ??
+          0; // Gantilah 'ppm' dengan kunci yang sesuai
 
       // Ambil nilai dari input_ppm Controller
       int inputPpm = int.tryParse(inputPPM.value.text) ?? 0;
@@ -200,8 +246,8 @@ class kelolaController extends GetxController {
 
       // Buat map data kontrol baru
       Map<String, dynamic> newKontrol = {
-        'info_nutrisi_id': latestInfoNutrisiId.value,
-        'info_nutrisi_ppm': latestInfoNutrisiPpm.value,
+        'info_nutrisi_id': latestInfoNutrisiId2,
+        'info_nutrisi_ppm': latestInfoNutrisiPpm,
         'input_ppm': inputPpm,
       };
 
@@ -211,7 +257,7 @@ class kelolaController extends GetxController {
         inputPPM.value.clear();
 
         // Panggil fungsi untuk mengambil data terbaru
-        fetchLatestInfoNutrisi();
+        getDataFromRealtimeDatabase();
       });
       Get.snackbar("Berhasil !",
           "Input ppm anda berhasil terkirim!. Silahkan tunggu nilai ppm terbaru !",
